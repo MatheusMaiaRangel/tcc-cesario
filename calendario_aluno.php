@@ -21,8 +21,8 @@ if (!isset($_SESSION['usuario'])) {
 
     <!--links de estilos-->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-      <link rel="stylesheet" href="css/style_calendar.css">
       <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/style_calendar.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     </head>
     <body class="main" style="padding-top: 56px;">
@@ -79,5 +79,23 @@ if (!isset($_SESSION['usuario'])) {
  
       <script src="javascript/scriptv2.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      <script>
+        // Máscara de CPF (exemplo para página de cadastro/login)
+        document.addEventListener('DOMContentLoaded', function() {
+          var cpfInput = document.getElementById('cpf');
+          if (cpfInput) {
+            cpfInput.addEventListener('input', function (e) {
+              let value = e.target.value.replace(/\D/g, '').substring(0, 11);
+              if (value.length > 9)
+                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1.$2.$3-$4');
+              else if (value.length > 6)
+                value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
+              else if (value.length > 3)
+                value = value.replace(/(\d{3})(\d+)/, '$1.$2');
+              e.target.value = value;
+            });
+          }
+        });
+      </script>
     </body>
   </html>

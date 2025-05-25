@@ -110,11 +110,23 @@ if (!isset($_SESSION['usuario'])) {
                     <div class="add-event-input">
                       <input type="text" placeholder="Descrição do evento:" class="event-description" name="event_description" required>
                     </div>
+                    <?php
+                      // Busca matérias do banco
+                      $conn = new mysqli("localhost", "root", "", "tccteste");
+                      $materias = [];
+                      if (!$conn->connect_error) {
+                        $res = $conn->query("SELECT Nome_Materia FROM materias");
+                        while ($row = $res->fetch_assoc()) {
+                          $materias[] = $row['Nome_Materia'];
+                        }
+                        $conn->close();
+                      }
+                    ?>
                     <select class="form-select event-type" aria-label="Default select example" name="event_type" required>
                       <option value="Urgente">Urgente</option>
-                      <option value="Matemática">Matemática</option>
-                      <option value="História">História</option>
-                      <option value="Português">Português</option>
+                      <?php foreach($materias as $mat): ?>
+                        <option value="<?= htmlspecialchars($mat) ?>"><?= htmlspecialchars($mat) ?></option>
+                      <?php endforeach; ?>
                     </select>
                     <input type="hidden" name="event_day" id="event-day-input">
                     <input type="hidden" name="event_month" id="event-month-input">
