@@ -151,6 +151,18 @@ CREATE TABLE `eventos` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `materias`
+--
+
+CREATE TABLE `materias` (
+  `Id_Materia` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome_Materia` varchar(100) NOT NULL,
+  PRIMARY KEY (`Id_Materia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `pertence`
 --
 
@@ -288,6 +300,12 @@ ALTER TABLE `eventos`
   ADD KEY `FK_Eventos_3` (`fk_Coordenadores_Id_Coord`);
 
 --
+-- Índices de tabela `materias`
+--
+ALTER TABLE `materias`
+  ADD PRIMARY KEY (`Id_Materia`);
+
+--
 -- Índices de tabela `pertence`
 --
 ALTER TABLE `pertence`
@@ -403,6 +421,12 @@ ALTER TABLE `ensina`
 ALTER TABLE `eventos`
   ADD CONSTRAINT `FK_Eventos_2` FOREIGN KEY (`fk_Professores_Id_Prof`) REFERENCES `professores` (`Id_Prof`),
   ADD CONSTRAINT `FK_Eventos_3` FOREIGN KEY (`fk_Coordenadores_Id_Coord`) REFERENCES `coordenadores` (`Id_Coord`);
+
+--
+-- Restrições para tabelas `materias`
+--
+ALTER TABLE `materias`
+  ADD CONSTRAINT `FK_Materias_1` FOREIGN KEY (`Id_Materia`) REFERENCES `eventos` (`Id_Evento`);
 
 --
 -- Restrições para tabelas `pertence`
