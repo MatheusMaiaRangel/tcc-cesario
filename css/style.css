@@ -109,3 +109,7 @@
   padding-bottom: 30px;
   background-color: #fdfdfb;
   }
+
+  .navbar-nav .nav-link {
+  color: #fff !important;
+  }
