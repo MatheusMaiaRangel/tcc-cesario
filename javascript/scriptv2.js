@@ -308,7 +308,7 @@ document.getElementById('add-event-form').addEventListener('submit', function(e)
   const newEvent = {
     event_nome: eventTitle,
     event_time_from: eventTimeFrom,
-    event_time_to: eventTimeTo,
+    event_time_to: eventTimeTo, // Corrija o nome aqui
     event_description: eventDesc,
     event_type: eventType,
     event_day: activeDay,
@@ -327,7 +327,7 @@ document.getElementById('add-event-form').addEventListener('submit', function(e)
     .then((data) => {
       alert(data.message);
       if (data.status === "success") {
-        getEvents();
+        getEvents(); // Recarrega os eventos após salvar
         // Limpa os campos do formulário
         addEventTitle.value = "";
         addEventFrom.value = "";
