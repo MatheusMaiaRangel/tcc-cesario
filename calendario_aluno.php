@@ -25,36 +25,16 @@ if (!isset($_SESSION['usuario'])) {
       <link rel="stylesheet" href="css/style.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     </head>
-    <body class="main">
-
+    <body class="main" style="padding-top: 56px;">
       <!--navbar-->
-      <nav class="navbar fixed-top background_blue">
+      <nav class="navbar fixed-top navbar-expand-lg background_blue">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">Nome da escola</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <a class="navbar-brand text-white" href="calendario_aluno.php?turma=">Oblivion</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">icone da escola</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-              <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Cardápio</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link blue" href="#">Calendário</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Comunicados</a>
-                  </li>
-              </div>
-            </div>
           </div>
         </nav>
-
       <!--container-->
           <div class="container">
             <div class="left">
