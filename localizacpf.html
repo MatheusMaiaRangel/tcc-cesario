@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Esqueceu a senha</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  
+  <div class="container">
+    <img src="img/Vector.png" alt="Logo" class="logo">
+    
+    <h1>Esqueceu a sua senha?</h1>
+    <h3>Insira seu cpf para você alterar</h3>
+    
+    <form id="localizacpf" action="localizacpf.php" method="POST">
+      <label for="cpf">CPF:</label>
+      <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
+      <div class="btn-container">
+        <button type="button" class="btn-cinza" onclick="window.location.href='login.html'">Voltar</button>
+        <button type="submit">Localizar</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const cpfInput = document.getElementById('cpf');
+    const form = document.getElementById('localizacpf');
+
+    // Máscara de CPF
+    cpfInput.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, '').substring(0, 11);
+      if (value.length > 9)
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1.$2.$3-$4');
+      else if (value.length > 6)
+        value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
+      else if (value.length > 3)
+        value = value.replace(/(\d{3})(\d+)/, '$1.$2');
+      e.target.value = value;
+    });
+
+    // Remove a máscara antes de enviar
+    form.addEventListener('submit', function () {
+      cpfInput.value = cpfInput.value.replace(/\D/g, '');
+    });
+
+    // Mostra erro via alert
+    const urlParams = new URLSearchParams(window.location.search);
+    const erro = urlParams.get('erro');
+
+    if (erro === 'cpf') {
+      document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+          title: 'Erro!',
+          text: 'CPF não encontrado!',
+          icon: 'error'
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>

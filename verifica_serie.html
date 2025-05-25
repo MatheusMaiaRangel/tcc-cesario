@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Selecione a sua turma</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <div class="container">
+    <img src="img/Vector.png" alt="Logo" class="logo">
+    
+    <h1>Selecione sua série e curso</h1>
+    
+    <form id="turma" action="verifica_serie.php" method="POST">
+    <label for="serie">Selecione sua série:</label>
+      <select id="serie" name="serie" required>
+        <option value="">Selecione</option>
+        <option value="primeiro">1° Ano</option>
+        <option value="segundo">2° Ano</option>
+        <option value="terceiro">3° Ano</option>
+      </select>
+      
+      <label for="curso">Seu curso:</label>
+      <select id="curso" name="curso" required>
+        <option value="">Selecione</option>
+        <option value="infonet">Informática para Internet</option>
+        <option value="adm">Administração</option>
+      </select>
+      <button type="submit">Enviar</button>
+      <a href ="cadastro.html">
+      <img src="img/left-arrow (1).png" alt="Voltar" class="back-button"></a>
+    </form>
+  </div>
+
+</body>
+</html>

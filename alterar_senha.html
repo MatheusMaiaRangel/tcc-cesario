@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alterar senha</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <img src="img/Vector.png" alt="Logo" class="logo">
+    
+    <h1>Altere sua senha</h1>
+    <h3>Digite sua nova senha</h3>
+    <form id="formSenha" action="alterar_senha.php" method="post">
+      <input type="hidden" id="tipo" name="tipo">
+      <input type="hidden" id="id" name="id">
+      
+      <label for="senha">Nova senha:</label>
+      <input type="password" id="senha" name="senha" placeholder="Digite sua nova senha"required>
+
+      <label for="confirma">Confirmar senha:</label>
+      <input type="password" id="confirma" name="confirma" placeholder="Confirme sua nova senha"required>
+
+      <div class="btn-container">
+        <button type="button" class="btn-cinza" onclick="window.location.href='localizacpf.html'">Voltar</button>
+        <button type="submit">Salvar senha</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Pegando parâmetros da URL
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get("tipo");
+    const id = params.get("id");
+
+    // Preenchendo campos ocultos
+    document.getElementById("tipo").value = tipo;
+    document.getElementById("id").value = id;
+  </script>
+</body>
+</html>

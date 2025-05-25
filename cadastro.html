@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="img/Vector.png" alt="Logo" class="logo" />
+    <h1>Cadastre-se</h1>
+    <h3>Insira suas informações</h3>
+
+    <form id="cadastroForm" method="post">
+
+      <!-- Tipo de usuário -->
+      <label for="tipo">Tipo de usuário:</label>
+      <select id="tipo" name="tipo" required>
+        <option value="">Selecione</option>
+        <option value="aluno">Aluno</option>
+        <option value="professor">Professor</option>
+        <option value="coordenador">Coordenador</option>
+      </select>
+
+      <!-- Nome -->
+      <label for="nome">Digite seu nome</label>
+      <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+
+      <!-- Nome Social -->
+      <label for="nomeSocial">Nome social (caso tenha)</label>
+      <input type="text" id="nomeSocial" name="nomeSocial" placeholder="Digite seu nome social (se tiver)">
+
+      <!-- CPF -->
+      <label for="cpf">Digite seu CPF</label>
+      <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" maxlength="14" required>
+      
+
+      <!-- Celular -->
+      <label for="celular">Digite seu celular</label>
+      <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" required>
+
+      <!-- Email -->
+      <label for="email">Digite seu email</label>
+      <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+
+      <!-- Senha -->
+      <label for="senha">Digite sua senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+        <div class="btn-container">
+          <button type="button" class="btn-cinza" onclick="window.location.href='index.html'">Voltar</button>
+          <button type="submit">Cadastrar</button>
+        </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('cadastroForm');
+    const cpfInput = document.getElementById('cpf');
+    const celularInput = document.getElementById('celular');
+
+    // Máscara de CPF
+    cpfInput.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, '').substring(0, 11);
+      if (value.length > 9)
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1.$2.$3-$4');
+      else if (value.length > 6)
+        value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
+      else if (value.length > 3)
+        value = value.replace(/(\d{3})(\d+)/, '$1.$2');
+      e.target.value = value;
+    });
+
+    // Máscara de Celular
+    celularInput.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, '').substring(0, 11);
+      if (value.length > 6)
+        value = value.replace(/(\d{2})(\d{5})(\d+)/, '($1) $2-$3');
+      else if (value.length > 2)
+        value = value.replace(/(\d{2})(\d+)/, '($1) $2');
+      else
+        value = value.replace(/(\d{0,2})/, '($1');
+      e.target.value = value;
+    });
+
+    // Redireciona para o PHP correto de acordo com o tipo de usuário
+    form.addEventListener('submit', function (e) {
+      const tipo = document.getElementById('tipo').value;
+      if (!tipo) {
+        alert('Selecione o tipo de usuário.');
+        e.preventDefault();
+        return;
+      }
+
+      // Remove máscara do CPF
+      cpfInput.value = cpfInput.value.replace(/\D/g, '');
+
+      // Define action dinamicamente
+      if (tipo === 'aluno') {
+        form.action = 'cadaluno.php';
+      } else if (tipo === 'professor') {
+        form.action = 'cadprof.php';
+      } else if (tipo === 'coordenador') {
+        form.action = 'cadcoord.php';
+      }
+    });
+  </script>
+</body>
+</html>
