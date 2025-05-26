@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08/05/2025 às 03:23
+-- Tempo de geração: 26/05/2025 às 02:15
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -131,7 +131,8 @@ CREATE TABLE `evento` (
 
 INSERT INTO `evento` (`id`, `nome`, `time_from`, `time_to`, `descricao`, `tipo`, `dia`, `mes`, `ano`) VALUES
 (1, 'prova', '12:12', '12:21', 'matéria: dor', 'Português', 2, 5, 2025),
-(2, 'TESTE LOUCO', '14:41', '20:00', 'apenas loucuras', 'Urgente', 0, 0, 0);
+(2, 'TESTE LOUCO', '14:41', '20:00', 'apenas loucuras', 'Urgente', 0, 0, 0),
+(3, 'provinha', '15:00', '18:00', 'prova', 'Ciencias', 25, 5, 2025);
 
 -- --------------------------------------------------------
 
@@ -155,10 +156,18 @@ CREATE TABLE `eventos` (
 --
 
 CREATE TABLE `materias` (
-  `Id_Materia` int(11) NOT NULL AUTO_INCREMENT,
+  `Id_Materia` int(11) NOT NULL,
   `Nome_Materia` varchar(100) NOT NULL,
-  PRIMARY KEY (`Id_Materia`)
+  `fk_Coordenadores_Id_Coord` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `materias`
+--
+
+INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`) VALUES
+(1, 'Ciencias', 5),
+(2, 'Ingles', 5);
 
 -- --------------------------------------------------------
 
@@ -366,13 +375,19 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `eventos`
 --
 ALTER TABLE `eventos`
   MODIFY `Id_Evento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `materias`
+--
+ALTER TABLE `materias`
+  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `professores`
@@ -421,32 +436,6 @@ ALTER TABLE `ensina`
 ALTER TABLE `eventos`
   ADD CONSTRAINT `FK_Eventos_2` FOREIGN KEY (`fk_Professores_Id_Prof`) REFERENCES `professores` (`Id_Prof`),
   ADD CONSTRAINT `FK_Eventos_3` FOREIGN KEY (`fk_Coordenadores_Id_Coord`) REFERENCES `coordenadores` (`Id_Coord`);
-
---
--- Restrições para tabelas `materias`
---
-ALTER TABLE `materias`
-  ADD CONSTRAINT `FK_Materias_1` FOREIGN KEY (`Id_Materia`) REFERENCES `eventos` (`Id_Evento`);
-
---
--- Restrições para tabelas `pertence`
---
-ALTER TABLE `pertence`
-  ADD CONSTRAINT `FK_Pertence_1` FOREIGN KEY (`fk_Turma_Id_Turma`) REFERENCES `turma` (`Id_Turma`),
-  ADD CONSTRAINT `FK_Pertence_2` FOREIGN KEY (`fk_Serie_Id_Serie`) REFERENCES `serie` (`Id_Serie`);
-
---
--- Restrições para tabelas `turma`
---
-ALTER TABLE `turma`
-  ADD CONSTRAINT `FK_Turma_2` FOREIGN KEY (`fk_Cursos_Id_Curso`) REFERENCES `cursos` (`Id_Curso`);
-
---
--- Restrições para tabelas `visualiza`
---
-ALTER TABLE `visualiza`
-  ADD CONSTRAINT `FK_Visualiza_1` FOREIGN KEY (`fk_Turma_Id_Turma`) REFERENCES `turma` (`Id_Turma`),
-  ADD CONSTRAINT `FK_Visualiza_2` FOREIGN KEY (`fk_Eventos_Id_Evento`) REFERENCES `eventos` (`Id_Evento`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
