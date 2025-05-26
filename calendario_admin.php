@@ -30,7 +30,7 @@ if (!isset($_SESSION['usuario'])) {
       <!--navbar-->
       <nav class="navbar fixed-top navbar-expand-lg background_blue">
           <div class="container-fluid">
-            <a class="navbar-brand text-white" href="index.php">Oblivion</a>
+            <a class="navbar-brand text-white" href="calendario_admin.php">Oblivion</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
