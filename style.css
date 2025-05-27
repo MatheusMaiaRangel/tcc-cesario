@@ -32,7 +32,7 @@ h1 {
   margin-bottom: 10px;
 }
 h2 {
-  color: #00aaff;
+  color: #00aaff !important;
   margin-bottom: 10px;
 }
 
@@ -166,3 +166,19 @@ font-size: 14px;
     margin-top: 30px;
   }
   
+  .titulo-azul {
+  color: #007bff !important;
+}
+
+  h2.titulo-azul {
+  color: #007bff !important;
+  text-align: center !important;
+  width: 100%;
+  display: block;
+}
+.container h2.titulo-azul {
+  color: #007bff !important;
+  text-align: center !important;
+  width: 100%;
+  display: block;
+}
