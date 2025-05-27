@@ -71,11 +71,11 @@ if (isset($_GET['remover'])) {
   <h2 class="text-center mb-4 titulo-azul w-100">Lista de Matérias</h2>
 
   <!-- Botão para abrir o modal de nova matéria -->
-  <div class="text-end mb-3 w-100">
-    <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modalNovaMateria">
-      Nova Matéria
-    </button>
-  </div>
+  <div class="text-end mb-3"> 
+      <button type="button" data-bs-toggle="modal" data-bs-target="#modalNovaMateria">
+      <img src="img/notebook.png">
+      </button>
+</div>
 
   <div class="table-responsive w-100">
     <table class="table table-bordered table-hover align-middle">
@@ -106,6 +106,7 @@ if (isset($_GET['remover'])) {
     </table>
   </div>
 </div>
+
 
 <!-- Modal Nova Matéria -->
 <div class="modal fade" id="modalNovaMateria" tabindex="-1" aria-labelledby="modalNovaMateriaLabel" aria-hidden="true">
