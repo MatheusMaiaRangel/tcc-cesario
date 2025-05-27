@@ -67,17 +67,17 @@ if (isset($_GET['remover'])) {
           </div>
         </nav>
 
-<div class="container bg-white shadow-lg rounded p-4 mb-5" style="margin-top:80px;">
-  <h2 class="text-center text-purple mb-4">Lista de Matérias</h2>
+<div class="container bg-white shadow-lg rounded p-4 mb-5 d-flex flex-column align-items-center" style="margin-top:80px; margin-left:auto; margin-right:auto;">
+  <h2 class="text-center mb-4 titulo-azul w-100">Lista de Matérias</h2>
 
   <!-- Botão para abrir o modal de nova matéria -->
-  <div class="text-end mb-3">
+  <div class="text-end mb-3 w-100">
     <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modalNovaMateria">
       Nova Matéria
     </button>
   </div>
 
-  <div class="table-responsive">
+  <div class="table-responsive w-100">
     <table class="table table-bordered table-hover align-middle">
       <thead class="table-dark text-center">
         <tr>
