@@ -1,13 +1,16 @@
-/* Unificação dos dois style.css: login/páginas gerais + painel/admin */
+/* RESET E CONFIGURAÇÕES GERAIS */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 body {
   background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
   flex-direction: column;
   margin-top: 5%;
@@ -16,23 +19,14 @@ body {
 }
 
 h1 {
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-  color: #00B2FF;
+  color: #00aaff;
   margin-bottom: 10px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h2 {
-  color: #00aaff !important;
+  color: #00aaff;
   margin-bottom: 10px;
-}
-
-h2.titulo-azul {
-  color: #007bff !important;
-  text-align: center !important;
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif !important;
-  width: 100%;
-  display: block;
-  font-size: 2rem;
 }
 
 h3 {
@@ -41,117 +35,12 @@ h3 {
 }
 
 .titles {
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #00B2FF;
   font-weight: bold !important;
 }
 
-.loginForm {
-  border: 2px solid #00B2FF;
-  border-radius: 5px;
-}
-
-::placeholder {
-  color: #AEAFAF !important;
-}
-
-.imgLogo {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.center {
-  text-align: center;
-}
-
-.icon {
-  height: 20px;
-  width: 20px;
-}
-
-.marginB {
-  margin-top: 15px;
-  text-align: center;
-}
-
-.myBtn {
-  border-radius: 20px !important;
-  padding-left: 0px 15px !important;
-  background-color: #00B2FF !important;
-}
-
-.card {
-  border-radius: 10px;
-  background-color: aliceblue;
-  min-height: 80vh;
-}
-.card-header {
-  background-color: #007bff;
-  color: white;
-  font-size: 1.5rem;
-  border-bottom: 1px solid #ddd;
-}
-.card-body {
-  background-color: #ffffff;
-  padding: 20px;
-}
-.card-title {
-  font-size: 1.25rem;
-}
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #004085;
-}
-.btn-back {
-  margin-top: 20px;
-}
-
-.background_blue {
-  background-color: #00B2FF;
-}
-.blue {
-  color: #00B2FF;
-}
-.main {
-  margin-top: 70px;
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 30px;
-  background-color: #fdfdfb;
-}
-
-.navbar-nav .nav-link {
-  color: #fff !important;
-}
-
-.container {
-  width: 90%;
-  max-width: 1200px;
-  text-align: center;
-  position: relative;
-  min-height: 850px;
-  margin: 0 auto;
-  padding: 5px;
-  border-radius: 10px;
-  background-color: #d3d3d3;
-  color: initial;
-  display: flex;
-  flex-direction: column;
-}
-
-.logo {
-  width: 100px;
-  margin: 0;
-}
-
+/* FORMULÁRIOS E INPUTS */
 form {
   display: flex;
   flex-direction: column;
@@ -171,7 +60,20 @@ input {
   font-size: 14px;
 }
 
-button[type="submit"] {
+select {
+  padding: 10px;
+  border: 2px solid #00aaff;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+::placeholder {
+  color: #AEAFAF !important;
+}
+
+/* BOTÕES */
+button[type="submit"],
+.myBtn {
   background: linear-gradient(135deg, #00aaff, #46abdd);
   color: white;
   border: none;
@@ -181,13 +83,114 @@ button[type="submit"] {
   box-shadow: 0 4px 12px rgba(6, 25, 138, 0.4);
   transition: all 0.3s ease;
   font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 1px;
 }
 
-button[type="submit"]:hover {
-  background: linear-gradient(135deg, #00aaff, #46abdd);
+button[type="submit"]:hover,
+.myBtn:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 16px rgba(6, 25, 138, 0.4);
+  background: linear-gradient(135deg, #00aaff, #46abdd);
   color: white !important;
+}
+
+.btn-cinza {
+  background: linear-gradient(135deg, #3f3852, #423c3c);
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.btn-cinza:hover {
+  background: linear-gradient(135deg, #3f3852, #423c3c);
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.btn-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn-back {
+  margin-top: 20px;
+}
+
+/* CONTAINERS E LAYOUTS */
+.container-login {
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.container, .main, .card {
+  width: 100%;
+  max-width: 1200px; /* Ajuste conforme necessário */
+  margin: 0 auto;
+}
+
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+/* CORES E ESTILOS */
+.background_blue {
+  background-color: #00B2FF;
+}
+
+.blue {
+  color: #00B2FF;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+}
+
+/* ELEMENTOS ESPECÍFICOS */
+.logo {
+  width: 100px;
+  margin: 0;
+}
+
+.imgLogo {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.marginB {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
 }
 
 .linha-ou {
@@ -238,38 +241,13 @@ button[type="submit"]:hover {
   z-index: 1000;
 }
 
-select {
-  padding: 10px;
-  border: 2px solid #00aaff;
-  border-radius: 5px;
-  font-size: 14px;
+/* BOTÕES BOOTSTRAP PADRÃO */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
-.btn-cinza {
-  background: linear-gradient(135deg, #3f3852, #423c3c);
-  color: white;
-  border: none;
-  padding: 10px 30px;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-  font-weight: 500;
-  cursor: pointer;
-  letter-spacing: 1px;
-}
-
-.btn-cinza:hover {
-  background: linear-gradient(135deg, #3f3852, #423c3c);
-  transform: scale(1.03);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-.btn-container {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.titulo-azul {
-  color: #007bff !important;
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
 }
