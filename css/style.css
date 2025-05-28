@@ -1,95 +1,124 @@
-/*tela de login*/
-  body{
-      margin-top: 5%;
-      margin-left: 7%;
-      margin-right: 7%;
-      /*background-image: linear-gradient(rgb(255, 255, 255), rgb(53,192,210));
-      min-height: 100vh;
-      text-align: center;*/
-  }
-      
-  h1{
-    font-family: 'Segoe UI', Helvetica, sans-serif;
-    color: #00B2FF;
-  }
-  .titles{
-    font-family: 'Segoe UI', Helvetica, sans-serif;
-    color: #00B2FF;
-    font-weight: bold !important;
-  }
-  .loginForm{
-    border: 2px solid #00B2FF; /* Cor da borda */
-    border-radius: 5px; /* Bordas arredondadas */
-  }
+/* Unificação dos dois style.css: login/páginas gerais + painel/admin */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
 
-  ::placeholder {
-    color: #AEAFAF !important; /* Chrome, Safari */
-  }
+body {
+  background: #fff;
+  min-height: 100vh;
+  flex-direction: column;
+  margin-top: 5%;
+  margin-left: 7%;
+  margin-right: 7%;
+}
 
-  .imgLogo{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  .center{
-    text-align: center;
-  }
- 
-  .icon{
-      height: 20px;
-      width: 20px;
-  }
+h1 {
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  color: #00B2FF;
+  margin-bottom: 10px;
+}
 
-  .marginB{
-    margin-top: 15px;
-    text-align: center;
-    
-  }
-  .myBtn{
-    border-radius: 20px !important;
-    padding-left: 0px 15px !important;
-    background-color: #00B2FF !important;
-  }
+h2 {
+  color: #00aaff !important;
+  margin-bottom: 10px;
+}
 
-  .card {
-    border-radius: 10px;
-    background-color: aliceblue;
-    min-height: 80vh;
-  }
-  .card-header {
-    background-color: #007bff;
-    color: white;
-    font-size: 1.5rem;
-    border-bottom: 1px solid #ddd;
-  }
-  .card-body {
-    background-color: #ffffff;
-    padding: 20px;
-  }
-  .card-title {
-    font-size: 1.25rem;
-  }
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-  }
-  .btn-back {
-    margin-top: 20px;
-  }
+h2.titulo-azul {
+  color: #007bff !important;
+  text-align: center !important;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif !important;
+  width: 100%;
+  display: block;
+  font-size: 2rem;
+}
 
-  .background_blue{
-    background-color: #00B2FF;
-  }
-  .blue{
-    color: #00B2FF;
-  }
-  .main{
-    margin-top: 70px;
+h3 {
+  color: #00aaff;
+  margin-bottom: 20px;
+}
 
+.titles {
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  color: #00B2FF;
+  font-weight: bold !important;
+}
+
+.loginForm {
+  border: 2px solid #00B2FF;
+  border-radius: 5px;
+}
+
+::placeholder {
+  color: #AEAFAF !important;
+}
+
+.imgLogo {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
+}
+
+.marginB {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.myBtn {
+  border-radius: 20px !important;
+  padding-left: 0px 15px !important;
+  background-color: #00B2FF !important;
+}
+
+.card {
+  border-radius: 10px;
+  background-color: aliceblue;
+  min-height: 80vh;
+}
+.card-header {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #ddd;
+}
+.card-body {
+  background-color: #ffffff;
+  padding: 20px;
+}
+.card-title {
+  font-size: 1.25rem;
+}
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+.btn-back {
+  margin-top: 20px;
+}
+
+.background_blue {
+  background-color: #00B2FF;
+}
+.blue {
+  color: #00B2FF;
+}
+.main {
+  margin-top: 70px;
   position: relative;
   min-height: 100vh;
   display: flex;
@@ -97,17 +126,150 @@
   justify-content: center;
   padding-bottom: 30px;
   background-color: #fdfdfb;
-  }
+}
 
-  .navbar-nav .nav-link {
+.navbar-nav .nav-link {
   color: #fff !important;
-  }
+}
 
-  h2.titulo-azul {
+.container {
+  width: 90%;
+  max-width: 1200px;
+  text-align: center;
+  position: relative;
+  min-height: 850px;
+  margin: 0 auto;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #d3d3d3;
+  color: initial;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  width: 100px;
+  margin: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+label {
+  color: #00aaff;
+  font-size: 14px;
+}
+
+input {
+  padding: 10px;
+  border: 2px solid #00aaff;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button[type="submit"] {
+  background: linear-gradient(135deg, #00aaff, #46abdd);
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(6, 25, 138, 0.4);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #00aaff, #46abdd);
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(6, 25, 138, 0.4);
+  color: white !important;
+}
+
+.linha-ou {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.linha-ou hr {
+  flex: 1;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.linha-ou span {
+  margin: 0 10px;
+  color: #888;
+}
+
+.botoes-opcionais {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.opcao {
+  border: 2px solid #00aaff;
+  background: white;
+  color: #00aaff;
+  padding: 10px;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.opcao:hover {
+  background: #e6f7ff;
+}
+
+.back-button {
+  bottom: 20px;
+  left: 20px;
+  cursor: pointer;
+  width: 40px;
+  height: auto;
+  z-index: 1000;
+}
+
+select {
+  padding: 10px;
+  border: 2px solid #00aaff;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.btn-cinza {
+  background: linear-gradient(135deg, #3f3852, #423c3c);
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.btn-cinza:hover {
+  background: linear-gradient(135deg, #3f3852, #423c3c);
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.btn-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.titulo-azul {
   color: #007bff !important;
-  text-align: center !important;
-  font-family: 'Segoe UI', Helvetica, sans-serif !important;
-  width: 100%;
-  display: block;
-  font-size: 2rem;
 }
