@@ -72,7 +72,7 @@ if (isset($_GET['remover'])) {
 
   <!-- Botão para abrir o modal de nova matéria -->
   <div class="text-end mb-3 w-100">
-      <img src="img/notebook.png" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#modalNovaMateria" alt="Nova Matéria">
+      <img src="img/notebook.png" style="cursor:pointer; width:50px; height:auto;" data-bs-toggle="modal" data-bs-target="#modalNovaMateria" alt="Nova Matéria">
   </div>
 
   <div class="table-responsive w-100">
