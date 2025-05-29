@@ -16,7 +16,18 @@ $stmt->bind_param("ssssssi", $dados['nome'], $dados['nomeSocial'], $dados['cpf']
 
 if ($stmt->execute()) {
     unset($_SESSION['cadastro_aluno']); // limpa a sessão após cadastro
-    echo "<script>alert('Cadastro realizado com sucesso!'); window.location.href='index.html';</script>";
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Aluno cadastrado com sucesso!',
+                icon: 'success'
+            }).then(function() {
+                window.location.href = 'login.html';
+            });
+        });
+    </script>";
 } else {
     echo "<script>alert('Erro ao cadastrar aluno: " . $stmt->error . "'); window.history.back();</script>";
 }
