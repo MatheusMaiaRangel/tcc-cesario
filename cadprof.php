@@ -55,7 +55,18 @@ $stmt = $conn->prepare("INSERT INTO professores (Nome_Prof, NomeSocial_Prof, Cpf
 $stmt->bind_param("ssssss", $nome, $nomeSocial, $cpf, $celular, $email, $senha);
 
 if ($stmt->execute()) {
-    echo "<script>alert('Professor cadastrado com sucesso!'); window.location.href='index.html';</script>";
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Professor cadastrado com sucesso!',
+                icon: 'success'
+            }).then(function() {
+                window.location.href = 'login.html';
+            });
+        });
+    </script>";
 } else {
     echo "<script>alert('Erro ao cadastrar professor: " . $stmt->error . "'); window.history.back();</script>";
 }
