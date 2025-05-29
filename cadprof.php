@@ -57,7 +57,18 @@ $verificaCoord->store_result();
 if ($verificaCoord->num_rows > 0) $cpfExistente = true;
 
 if ($cpfExistente) {
-    echo "<script>alert('CPF já cadastrado para outro usuário!'); window.history.back();</script>";
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'CPF já cadastrado para outro usuário!',
+                icon: 'error'
+            }).then(function() {
+                window.history.back();
+            });
+        });
+    </script>";
     exit();
 }
 
