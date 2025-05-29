@@ -55,8 +55,18 @@ $stmt = $conn->prepare("INSERT INTO coordenadores (Nome_Coord, NomeSocial_Coord,
 $stmt->bind_param("ssssss", $nome, $nomeSocial, $cpf, $celular, $email, $senha);
 
 if ($stmt->execute()) {
-    echo "<script>alert('Coordenador cadastrado com sucesso!'); window.location.href='index.html';</script>";
-} else {
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Senha alterada com sucesso!',
+                icon: 'success'
+            }).then(function() {
+                window.location.href = 'login.html';
+            });
+        });
+    </script>";
     echo "<script>alert('Erro ao cadastrar coordenador: " . $stmt->error . "'); window.history.back();</script>";
 }
 
