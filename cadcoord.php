@@ -17,7 +17,18 @@ $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
 // Verifica se todos os campos com "required" foram preenchidos
 if (empty($nome) || empty($cpf) || empty($celular) || empty($email) || empty($_POST['senha'])) {
-    echo "<script>alert('Por favor, preencha todos os campos obrigatórios.'); window.history.back();</script>";
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Por favor, preencha todos os campos obrigatórios.',
+                icon: 'error'
+            }).then(function() {
+                window.history.back();
+            });
+        });
+    </script>";
     exit();
 }
 
