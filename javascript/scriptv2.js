@@ -299,8 +299,9 @@ document.getElementById('add-event-form').addEventListener('submit', function(e)
   const eventTimeTo = addEventTo.value.trim();
   const eventType = addEventType.value.trim();
   const eventDesc = addEventDescription.value.trim();
+  const eventTurma = document.querySelector('.event-turma').value;
 
-  if (!eventTitle || !eventTimeFrom || !eventTimeTo || !eventType || !eventDesc) {
+  if (!eventTitle || !eventTimeFrom || !eventTimeTo || !eventType || !eventDesc || !eventTurma) {
     alert("Preencha todos os campos obrigatórios.");
     return;
   }
@@ -308,12 +309,13 @@ document.getElementById('add-event-form').addEventListener('submit', function(e)
   const newEvent = {
     event_nome: eventTitle,
     event_time_from: eventTimeFrom,
-    event_time_to: eventTimeTo, // Corrija o nome aqui
+    event_time_to: eventTimeTo,
     event_description: eventDesc,
     event_type: eventType,
     event_day: activeDay,
     event_month: month + 1,
     event_year: year,
+    event_turma: eventTurma
   };
 
   fetch("addEvento.php", {
@@ -334,6 +336,7 @@ document.getElementById('add-event-form').addEventListener('submit', function(e)
         addEventTo.value = "";
         addEventType.value = "";
         addEventDescription.value = "";
+        document.querySelector('.event-turma').value = "";
       }
     })
     .catch((error) => {
