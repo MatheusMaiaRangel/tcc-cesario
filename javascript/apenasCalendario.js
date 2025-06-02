@@ -56,7 +56,8 @@ async function getEvents() {
         title: evento.nome,
         time: evento.time_from + " - " + evento.time_to,
         type: evento.tipo,
-        description: evento.descricao
+        description: evento.descricao,
+        cor_materia: evento.cor_materia
       };
 
       if (exist) {
@@ -192,10 +193,12 @@ function updateEvents(dateNum) {
       year === eventObj.year
     ) {
       eventObj.events.forEach((event) => {
+        // Busca a cor da matéria se existir
+        let cor = event.cor_materia || '';
         events += `
           <div class="event">
             <div class="title ${event.type}">
-              <i class="fas fa-circle"></i>
+              <i class="fas fa-circle" style="color:${cor}"></i>
               <h3 class="event-title">${event.type}: ${event.title}</h3>
               <span class="event-time">${event.time}</span>
             </div>
