@@ -237,9 +237,15 @@ function updateEvents(date) {
       year === event.year
     ) {
       event.events.forEach((event) => {
+        // Busca a cor da matéria pelo nome
+        let cor = '';
+        const option = document.querySelector(`.event-type option[value='${event.type}']`);
+        if (option && option.dataset.color) {
+          cor = option.dataset.color;
+        }
         events += `<div class="event">
             <div class="title ${event.type}">
-              <i class="fas fa-circle"></i>
+              <i class="fas fa-circle" style="color:${cor}"></i>
               <h3 class="event-title">${event.type}: ${event.title}</h3><span class="event-time">${event.time}</span>
             </div>
             <div class="event-time">
