@@ -43,7 +43,7 @@ if (isset($_GET['remover'])) {
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciar Matérias</title>
+    <title>Gerenciar matérias</title>
 
        <!--links de estilos-->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -68,7 +68,7 @@ if (isset($_GET['remover'])) {
         </nav>
 
 <div class="container bg-white shadow-lg rounded p-4 mb-5 d-flex flex-column align-items-center" style="margin-top:80px; margin-left:auto; margin-right:auto;">
-  <h2 class="text-center mb-4 titulo-azul w-100">Lista de Matérias</h2>
+  <h2 class="text-center mb-4 titulo-azul w-100">Lista de matérias</h2>
 
   <!-- Botão para abrir o modal de nova matéria -->
   <div class="text-end mb-3 w-100">
@@ -80,7 +80,7 @@ if (isset($_GET['remover'])) {
       <thead class="table-dark text-center">
         <tr>
           <th>ID</th>
-          <th>Nome da Matéria</th>
+          <th>Nome da matéria</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -111,13 +111,19 @@ if (isset($_GET['remover'])) {
   <div class="modal-dialog">
     <form method="post" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalNovaMateriaLabel">Nova Matéria</h5>
+        <h5 class="modal-title" id="modalNovaMateriaLabel">Nova matéria</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label for="nome_materia" class="form-label">Nome da Matéria</label>
+          <label for="nome_materia" class="form-label">Nome da matéria</label>
           <input type="text" class="form-control" id="nome_materia" name="nome_materia" required>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="cor_materia" class="form-label">Cor da matéria</label>
+          <input type="text" class="form-control" id="cor_materia" name="cor_materia" required>
         </div>
       </div>
       <div class="modal-footer">
