@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26/05/2025 às 02:15
+-- Tempo de geração: 03/06/2025 às 00:22
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -46,10 +46,10 @@ INSERT INTO `alunos` (`Nome_Aluno`, `NomeSocial_Aluno`, `Cpf_Aluno`, `Cel_Aluno`
 ('teste again', '', '33333333333', '19999999999', '$2y$10$sAkBnH3W.K..f3zBVYgju.jgfgb8DcY2IJHwywj5itBmRTgsrIsGC', 'ada@gmail.com', 32, NULL),
 ('gustavo', '', '62189131231', '19999999999', '$2y$10$v8KtmSHpHIXSH0SRrPbUXOgS9Hq4c3990St2tBdWzSOuhS16dbqg2', 'amam@gmail.com', 33, NULL),
 ('teste again', '', '75465644565', '19999999999', '$2y$10$viGE2SGOvmng0v/UotlacuboBfVDHLs0nGgZOGSekF2O0QByCi4Ku', 'test@gmail.com', 34, NULL),
-('papaizinho', 'maia', '66666666666', '19999999999', '$2y$10$fJYYD9Kp8dav9J.7tOx9ZutrKwEu7PEm.GC8BHAGM0yhMOetrdepm', 'da@gmail.com', 35, NULL),
 ('teste gpt', 'chat', '32323232323', '19999999999', '$2y$10$7/7a19RsZDMo7tG94UqNL.Cjj3BYDLgL0Lvjf.fpNTfok0Q13HLsO', 'maia@gmail.com', 36, 3),
 ('luigi', 'luisa', '96969669696', '19999999999', '$2y$10$76rT4QTcoYUiEdD3RG6iF.UW/e1IvsY..g79v0mLlaFbhnG8orjqa', 'lui@gmail.com', 37, 5),
-('paulo', 'paulo', '15488186225', '19981220027', '$2y$10$6yODRdcAeTogUpZeXIC2YOOXyRmLSESUkV1Wpnl6SGlqVm7VBKBe6', 'coisa@Gmail.com', 38, 1);
+('paulo', 'paulo', '15488186225', '19981220027', '$2y$10$6yODRdcAeTogUpZeXIC2YOOXyRmLSESUkV1Wpnl6SGlqVm7VBKBe6', 'coisa@Gmail.com', 38, 1),
+('Maia', 'Maia', '66666666666', '19999999999', '$2y$10$DrptG4ElQHF08.4crzC6Uezt67ReWAFfsXIDmIaF.7e0Nr64u5Q7u', 'maia@gmail.com', 39, 3);
 
 -- --------------------------------------------------------
 
@@ -122,17 +122,21 @@ CREATE TABLE `evento` (
   `tipo` varchar(50) DEFAULT NULL,
   `dia` int(11) DEFAULT NULL,
   `mes` int(11) DEFAULT NULL,
-  `ano` int(11) DEFAULT NULL
+  `ano` int(11) DEFAULT NULL,
+  `fk_Turma_Id_Turma` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Despejando dados para a tabela `evento`
 --
 
-INSERT INTO `evento` (`id`, `nome`, `time_from`, `time_to`, `descricao`, `tipo`, `dia`, `mes`, `ano`) VALUES
-(1, 'prova', '12:12', '12:21', 'matéria: dor', 'Português', 2, 5, 2025),
-(2, 'TESTE LOUCO', '14:41', '20:00', 'apenas loucuras', 'Urgente', 0, 0, 0),
-(3, 'provinha', '15:00', '18:00', 'prova', 'Ciencias', 25, 5, 2025);
+INSERT INTO `evento` (`id`, `nome`, `time_from`, `time_to`, `descricao`, `tipo`, `dia`, `mes`, `ano`, `fk_Turma_Id_Turma`) VALUES
+(1, 'prova', '12:12', '12:21', 'matéria: dor', 'Português', 2, 5, 2025, NULL),
+(2, 'TESTE LOUCO', '14:41', '20:00', 'apenas loucuras', 'Urgente', 0, 0, 0, NULL),
+(3, 'provinha', '15:00', '18:00', 'prova', 'Ciencias', 25, 5, 2025, NULL),
+(4, 'Teste', '12:00', '13:00', 'teste', 'Ciencias', 28, 5, 2025, NULL),
+(5, 'tetse', '12:00', '14:00', 'teste', 'Urgente', 2, 6, 2025, 3),
+(6, 'Teste pra mostrar', '12:00', '15:00', 'teste', 'Urgente', 2, 6, 2025, 1);
 
 -- --------------------------------------------------------
 
@@ -167,7 +171,10 @@ CREATE TABLE `materias` (
 
 INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`) VALUES
 (1, 'Ciencias', 5),
-(2, 'Ingles', 5);
+(2, 'Ingles', 5),
+(3, 'Matemática', 5),
+(4, 'Português', 5),
+(5, 'Geografia', 5);
 
 -- --------------------------------------------------------
 
@@ -245,7 +252,7 @@ CREATE TABLE `turma` (
 INSERT INTO `turma` (`Id_Turma`, `Nome_Turma`, `fk_Cursos_Id_Curso`, `fk_Serie_Id_Serie`) VALUES
 (1, '1° Informática para Internet', 1, 1),
 (2, '2° Informática para Internet', 1, 2),
-(3, 'Informática para Internet', 1, 3),
+(3, '3º Informática para Internet', 1, 3),
 (4, '1° Administração', 2, 1),
 (5, '2° Administração', 2, 2),
 (6, '3° Administração', 2, 3);
@@ -357,7 +364,7 @@ ALTER TABLE `visualiza`
 -- AUTO_INCREMENT de tabela `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `Id_Aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `Id_Aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de tabela `coordenadores`
@@ -375,7 +382,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `eventos`
@@ -387,7 +394,7 @@ ALTER TABLE `eventos`
 -- AUTO_INCREMENT de tabela `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `professores`
