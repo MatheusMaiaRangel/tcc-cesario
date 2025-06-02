@@ -114,10 +114,16 @@ if (!isset($_SESSION['usuario'])) {
                       // Busca matérias do banco
                       $conn = new mysqli("localhost", "root", "", "tccteste");
                       $materias = [];
+                      $turmas = [];
                       if (!$conn->connect_error) {
                         $res = $conn->query("SELECT Nome_Materia FROM materias");
                         while ($row = $res->fetch_assoc()) {
                           $materias[] = $row['Nome_Materia'];
+                        }
+                        // Busca turmas
+                        $res2 = $conn->query("SELECT Id_Turma, Nome_Turma FROM turma");
+                        while ($row2 = $res2->fetch_assoc()) {
+                          $turmas[] = $row2;
                         }
                         $conn->close();
                       }
@@ -126,6 +132,13 @@ if (!isset($_SESSION['usuario'])) {
                       <option value="Urgente">Urgente</option>
                       <?php foreach($materias as $mat): ?>
                         <option value="<?= htmlspecialchars($mat) ?>"><?= htmlspecialchars($mat) ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <!-- NOVO: Seleção de turma -->
+                    <select class="form-select event-turma" aria-label="Selecione a turma" name="event_turma" required>
+                      <option value="">Selecione a turma</option>
+                      <?php foreach($turmas as $turma): ?>
+                        <option value="<?= $turma['Id_Turma'] ?>"><?= htmlspecialchars($turma['Nome_Turma']) ?></option>
                       <?php endforeach; ?>
                     </select>
                     <input type="hidden" name="event_day" id="event-day-input">
