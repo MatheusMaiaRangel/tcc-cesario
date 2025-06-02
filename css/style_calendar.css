@@ -318,26 +318,10 @@
   font-size: 1rem;
   font-weight: 400;
   margin-left: 20px;
-}
-.circle-mate{
-  color: darkblue; /* Muda a cor do ícone para vermelho */
-}
+} 
 
 .Urgente{
   color: red;
-  font-size: 0.5rem;
-}
-.Português{
-  color: darkorange;
-  font-size: 0.5rem;
-}
-.História{
-  color: purple;
-  font-size: 0.5rem;
-}
-.Matemática{
-  color: darkblue;
-  font-size: 0.5rem;
 }
 
 .events .event:hover i {
