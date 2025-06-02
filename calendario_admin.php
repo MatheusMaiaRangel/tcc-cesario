@@ -116,9 +116,9 @@ if (!isset($_SESSION['usuario'])) {
                       $materias = [];
                       $turmas = [];
                       if (!$conn->connect_error) {
-                        $res = $conn->query("SELECT Nome_Materia FROM materias");
+                        $res = $conn->query("SELECT Nome_Materia, cor_materia FROM materias");
                         while ($row = $res->fetch_assoc()) {
-                          $materias[] = $row['Nome_Materia'];
+                          $materias[] = $row;
                         }
                         // Busca turmas
                         $res2 = $conn->query("SELECT Id_Turma, Nome_Turma FROM turma");
@@ -131,10 +131,12 @@ if (!isset($_SESSION['usuario'])) {
                     <select class="form-select event-type" aria-label="Default select example" name="event_type" required>
                       <option value="Urgente">Urgente</option>
                       <?php foreach($materias as $mat): ?>
-                        <option value="<?= htmlspecialchars($mat) ?>"><?= htmlspecialchars($mat) ?></option>
+                        <option value="<?= htmlspecialchars($mat['Nome_Materia']) ?>" data-color="<?= htmlspecialchars($mat['cor_materia']) ?>">
+                          <span style="color:<?= htmlspecialchars($mat['cor_materia']) ?>;">&#9679;</span> <?= htmlspecialchars($mat['Nome_Materia']) ?>
+                        </option>
                       <?php endforeach; ?>
                     </select>
-                    <!-- NOVO: Seleção de turma -->
+                    <!-- Seleção de turma -->
                     <select class="form-select event-turma" aria-label="Selecione a turma" name="event_turma" required>
                       <option value="">Selecione a turma</option>
                       <?php foreach($turmas as $turma): ?>
