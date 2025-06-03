@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/06/2025 às 02:56
+-- Tempo de geração: 03/06/2025 às 03:22
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -80,8 +80,8 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`Id_Curso`, `Nome_Curso`, `fk_Coordenadores_Id_Coord`) VALUES
-(1, 'Informática para Internet', 6),
-(2, 'Administração', 7);
+(1, 'Informática para Internet - Noturno', 6),
+(2, 'Administração - Noturno', 7);
 
 -- --------------------------------------------------------
 
@@ -113,6 +113,14 @@ CREATE TABLE `evento` (
   `fk_Turma_Id_Turma` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Despejando dados para a tabela `evento`
+--
+
+INSERT INTO `evento` (`id`, `nome`, `time_from`, `time_to`, `descricao`, `tipo`, `dia`, `mes`, `ano`, `fk_Turma_Id_Turma`) VALUES
+(1, 'Prova - Biologia', '11:40', '12:30', 'O aventureiro', 'Biologia', 3, 6, 2025, 5),
+(2, 'Prova - Biologia', '11:40', '12:30', 'O aventureiro', 'Biologia', 3, 6, 2025, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -125,6 +133,17 @@ CREATE TABLE `materias` (
   `fk_Coordenadores_Id_Coord` int(11) DEFAULT NULL,
   `cor_materia` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `materias`
+--
+
+INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`, `cor_materia`) VALUES
+(1, 'Matemática', 5, '#010afe'),
+(2, 'Português', 5, '#ff7300'),
+(3, 'História', 5, '#fdda58'),
+(4, 'Ciencias', 5, '#00ff1e'),
+(5, 'Biologia', 5, '#01601d');
 
 -- --------------------------------------------------------
 
@@ -200,12 +219,12 @@ CREATE TABLE `turma` (
 --
 
 INSERT INTO `turma` (`Id_Turma`, `Nome_Turma`, `fk_Cursos_Id_Curso`, `fk_Serie_Id_Serie`) VALUES
-(1, '1° Informática para Internet', 1, 1),
-(2, '2° Informática para Internet', 1, 2),
-(3, '3º Informática para Internet', 1, 3),
-(4, '1° Administração', 2, 1),
-(5, '2° Administração', 2, 2),
-(6, '3° Administração', 2, 3);
+(1, '1° Informática para Internet - Noturno', 1, 1),
+(2, '2° Informática para Internet - Noturno', 1, 2),
+(3, '3º Informática para Internet - Noturno', 1, 3),
+(4, '1° Administração - Noturno', 2, 1),
+(5, '2° Administração - Noturno', 2, 2),
+(6, '3° Administração - Noturno', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -324,13 +343,13 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `professores`
