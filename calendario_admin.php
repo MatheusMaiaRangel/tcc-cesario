@@ -92,14 +92,14 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="modal-content">
                   <div class="modal-header">
                     <div class="add-event-header">
-                      <div class="title">Adicionar Evento</div>
+                      <div class="title">Adicionar evento</div>
                       <i type="button" class="fas fa-times close" data-bs-dismiss="modal"></i>
                     </div>
                   </div>
                 <form id="add-event-form">
                   <div class="add-event-body">
                     <div class="add-event-input">
-                      <input type="text" placeholder="Nome do Evento:" class="event-name" name="event_nome" required>
+                      <input type="text" placeholder="Nome do evento:" class="event-name" name="event_nome" required>
                     </div>
                     <div class="add-event-input">
                       <input type="text" placeholder="Hora do evento de:" class="event-time-from" name="event_time_from" required>
@@ -148,7 +148,7 @@ if (!isset($_SESSION['usuario'])) {
                     <input type="hidden" name="event_year" id="event-year-input">
                     <!--botão de adicionar eventos-->
                   <div class="add-event-footer">
-                    <button type="submit" class="add-event-btn">Adicionar Evento</button>
+                    <button type="submit" class="add-event-btn">Adicionar evento</button>
                   </div>
                   </div>
                 </form>
