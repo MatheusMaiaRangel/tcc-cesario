@@ -33,11 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_materia'])) {
 }
 
 // Remover matéria
-if (isset($_GET['remover'])) {
+if (isset($_GET['remover']) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
   $id = intval($_GET['remover']);
-  // Só remove se for do coordenador logado
-  $conn->query("DELETE FROM materias WHERE Id_Materia = $id AND fk_Coordenadores_Id_Coord = $coordenador_id");
-  header("Location: gerenciar_materias.php");
+  $result = $conn->query("DELETE FROM materias WHERE Id_Materia = $id AND fk_Coordenadores_Id_Coord = $coordenador_id");
+  if ($result) {
+    echo json_encode(['success' => true]);
+  } else {
+    echo json_encode(['success' => false]);
+  }
   exit();
 }
 ?>
@@ -101,8 +104,7 @@ if (isset($_GET['remover'])) {
                 <td class="text-center"><span style="display:inline-block;width:24px;height:24px;border-radius:50%;background:<?= htmlspecialchars($m['cor_materia']) ?>;border:1px solid #ccc;"></span></td>
                 <td><?= htmlspecialchars($m['Nome_Materia']) ?></td>
                 <td class="text-center">
-                  <a href="?remover=<?= $m['Id_Materia'] ?>" class="btn btn-sm btn-danger"
-                    onclick="return confirm('Remover esta matéria?')">Remover</a>
+                  <a href="?remover=<?= $m['Id_Materia'] ?>" class="btn btn-sm btn-danger btn-remover-materia" data-nome="<?= htmlspecialchars($m['Nome_Materia']) ?>">Remover</a>
                 </td>
               </tr>
             <?php endwhile; ?>
@@ -148,6 +150,45 @@ if (isset($_GET['remover'])) {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.btn-remover-materia').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const url = this.getAttribute('href');
+          const nome = this.getAttribute('data-nome');
+          const row = btn.closest('tr');
+          Swal.fire({
+            title: `Remover matéria?`,
+            text: `Deseja realmente remover a matéria "${nome}"? Essa ação não poderá ser desfeita!`,
+            icon: 'warning',
+            showDenyButton: true,   
+            confirmButtonText: 'Remover',
+            denyButtonText: 'Cancelar',
+            confirmButtonColor: '#d33',
+            denyButtonColor: '#666',
+            reverseButtons: true // <-- faz o botão cancelar ficar à esquerda
+          }).then((result) => {
+            if (result.isConfirmed) {
+              fetch(url, { method: 'GET', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    row.remove();
+                    Swal.fire('Removida!', 'A matéria foi removida com sucesso.', 'success');
+                  } else {
+                    Swal.fire('Erro!', 'Não foi possível remover a matéria.', 'error');
+                  }
+                });
+            } else if (result.isDenied) {
+              Swal.fire('A matéria não foi removida.', '', 'info');
+            }
+          });
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
