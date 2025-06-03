@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/06/2025 às 00:22
+-- Tempo de geração: 03/06/2025 às 02:35
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -136,7 +136,12 @@ INSERT INTO `evento` (`id`, `nome`, `time_from`, `time_to`, `descricao`, `tipo`,
 (3, 'provinha', '15:00', '18:00', 'prova', 'Ciencias', 25, 5, 2025, NULL),
 (4, 'Teste', '12:00', '13:00', 'teste', 'Ciencias', 28, 5, 2025, NULL),
 (5, 'tetse', '12:00', '14:00', 'teste', 'Urgente', 2, 6, 2025, 3),
-(6, 'Teste pra mostrar', '12:00', '15:00', 'teste', 'Urgente', 2, 6, 2025, 1);
+(6, 'Teste pra mostrar', '12:00', '15:00', 'teste', 'Urgente', 2, 6, 2025, 1),
+(7, 'teste de cor', '15:00', '15:00', 'cor', 'louca', 2, 6, 2025, 3),
+(8, 'teste de cor dnv', '15:00', '20:50', 'cor', 'allaa', 2, 6, 2025, 3),
+(9, 'cor tesye', '19:10', '20:50', 'teste', 'bri', 2, 6, 2025, 3),
+(10, 'Teste1 com o Paulão', '12:00', '20:50', 'teste', 'lepo', 2, 6, 2025, 3),
+(11, 'tsetse da cor', '12:00', '13:00', 'corzada xd', 'pop', 2, 6, 2025, 3);
 
 -- --------------------------------------------------------
 
@@ -162,19 +167,23 @@ CREATE TABLE `eventos` (
 CREATE TABLE `materias` (
   `Id_Materia` int(11) NOT NULL,
   `Nome_Materia` varchar(100) NOT NULL,
-  `fk_Coordenadores_Id_Coord` int(11) DEFAULT NULL
+  `fk_Coordenadores_Id_Coord` int(11) DEFAULT NULL,
+  `cor_materia` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `materias`
 --
 
-INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`) VALUES
-(1, 'Ciencias', 5),
-(2, 'Ingles', 5),
-(3, 'Matemática', 5),
-(4, 'Português', 5),
-(5, 'Geografia', 5);
+INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`, `cor_materia`) VALUES
+(1, 'Ciencias', 5, NULL),
+(3, 'Matemática', 5, NULL),
+(4, 'Português', 5, NULL),
+(5, 'Geografia', 5, NULL),
+(7, 'louca', 5, NULL),
+(9, 'bri', 5, NULL),
+(10, 'lepo', 5, NULL),
+(11, 'pop', 5, '#63db00');
 
 -- --------------------------------------------------------
 
@@ -382,7 +391,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `eventos`
@@ -394,7 +403,7 @@ ALTER TABLE `eventos`
 -- AUTO_INCREMENT de tabela `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `professores`
