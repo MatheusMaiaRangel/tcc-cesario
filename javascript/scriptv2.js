@@ -239,6 +239,7 @@ function updateEvents(date) {
       event.events.forEach((event) => {
         // Busca a cor da matéria do evento
         let cor = event.cor_materia || '';
+        let turmaInfo = event.turma_nome ? `<div class='event-turma-info'><b>Turma:</b> ${event.turma_nome}</div>` : '';
         events += `<div class="event">
             <div class="title ${event.type}">
               <i class="fas fa-circle" style="color:${cor}"></i>
@@ -247,6 +248,7 @@ function updateEvents(date) {
             <div class="event-time">
               <p>${event.description}</p>
             </div>
+            ${turmaInfo}
         </div>`;
       });
     }
@@ -396,7 +398,9 @@ async function getEvents() {
         time: evento.time_from + " - " + evento.time_to,
         type: evento.tipo,
         description: evento.descricao,
-        cor_materia: evento.cor_materia || ''
+        cor_materia: evento.cor_materia || '',
+        turma_nome: evento.Nome_Turma || '',
+        turma_id: evento.fk_Turma_Id_Turma || ''
       };
 
       if (exist) {
