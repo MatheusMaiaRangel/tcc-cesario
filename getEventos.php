@@ -19,14 +19,14 @@ if ($tipo === 'aluno') {
         echo json_encode([]);
         exit;
     }
-    $sql = "SELECT e.dia, e.mes, e.ano, e.nome, e.time_from, e.time_to, e.tipo, e.descricao, m.cor_materia FROM evento e LEFT JOIN materias m ON e.tipo = m.Nome_Materia WHERE e.fk_Turma_Id_Turma = ?";
+    $sql = "SELECT e.dia, e.mes, e.ano, e.nome, e.time_from, e.time_to, e.tipo, e.descricao, m.cor_materia, e.fk_Turma_Id_Turma, t.Nome_Turma FROM evento e LEFT JOIN materias m ON e.tipo = m.Nome_Materia LEFT JOIN turma t ON e.fk_Turma_Id_Turma = t.Id_Turma WHERE e.fk_Turma_Id_Turma = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $turma);
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
     // Professores e coordenadores veem todos os eventos
-    $sql = "SELECT e.dia, e.mes, e.ano, e.nome, e.time_from, e.time_to, e.tipo, e.descricao, m.cor_materia FROM evento e LEFT JOIN materias m ON e.tipo = m.Nome_Materia";
+    $sql = "SELECT e.dia, e.mes, e.ano, e.nome, e.time_from, e.time_to, e.tipo, e.descricao, m.cor_materia, e.fk_Turma_Id_Turma, t.Nome_Turma FROM evento e LEFT JOIN materias m ON e.tipo = m.Nome_Materia LEFT JOIN turma t ON e.fk_Turma_Id_Turma = t.Id_Turma";
     $result = $conn->query($sql);
 }
 
