@@ -89,7 +89,7 @@ if (isset($_GET['remover'])) {
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark text-center">
           <tr>
-            <th>ID</th>
+            <th>Cor</th>
             <th>Nome da matéria</th>
             <th>Ações</th>
           </tr>
@@ -98,7 +98,7 @@ if (isset($_GET['remover'])) {
           <?php if ($materias->num_rows > 0): ?>
             <?php while ($m = $materias->fetch_assoc()): ?>
               <tr>
-                <td class="text-center"><?= $m['Id_Materia'] ?></td>
+                <td class="text-center"><span style="display:inline-block;width:24px;height:24px;border-radius:50%;background:<?= htmlspecialchars($m['cor_materia']) ?>;border:1px solid #ccc;"></span></td>
                 <td><?= htmlspecialchars($m['Nome_Materia']) ?></td>
                 <td class="text-center">
                   <a href="?remover=<?= $m['Id_Materia'] ?>" class="btn btn-sm btn-danger"
