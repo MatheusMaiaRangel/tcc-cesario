@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/06/2025 às 02:35
+-- Tempo de geração: 03/06/2025 às 02:56
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -37,19 +37,6 @@ CREATE TABLE `alunos` (
   `Id_Aluno` int(11) NOT NULL,
   `fk_Turma_Id_Turma` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `alunos`
---
-
-INSERT INTO `alunos` (`Nome_Aluno`, `NomeSocial_Aluno`, `Cpf_Aluno`, `Cel_Aluno`, `Senha_Aluno`, `Email_Aluno`, `Id_Aluno`, `fk_Turma_Id_Turma`) VALUES
-('teste again', '', '33333333333', '19999999999', '$2y$10$sAkBnH3W.K..f3zBVYgju.jgfgb8DcY2IJHwywj5itBmRTgsrIsGC', 'ada@gmail.com', 32, NULL),
-('gustavo', '', '62189131231', '19999999999', '$2y$10$v8KtmSHpHIXSH0SRrPbUXOgS9Hq4c3990St2tBdWzSOuhS16dbqg2', 'amam@gmail.com', 33, NULL),
-('teste again', '', '75465644565', '19999999999', '$2y$10$viGE2SGOvmng0v/UotlacuboBfVDHLs0nGgZOGSekF2O0QByCi4Ku', 'test@gmail.com', 34, NULL),
-('teste gpt', 'chat', '32323232323', '19999999999', '$2y$10$7/7a19RsZDMo7tG94UqNL.Cjj3BYDLgL0Lvjf.fpNTfok0Q13HLsO', 'maia@gmail.com', 36, 3),
-('luigi', 'luisa', '96969669696', '19999999999', '$2y$10$76rT4QTcoYUiEdD3RG6iF.UW/e1IvsY..g79v0mLlaFbhnG8orjqa', 'lui@gmail.com', 37, 5),
-('paulo', 'paulo', '15488186225', '19981220027', '$2y$10$6yODRdcAeTogUpZeXIC2YOOXyRmLSESUkV1Wpnl6SGlqVm7VBKBe6', 'coisa@Gmail.com', 38, 1),
-('Maia', 'Maia', '66666666666', '19999999999', '$2y$10$DrptG4ElQHF08.4crzC6Uezt67ReWAFfsXIDmIaF.7e0Nr64u5Q7u', 'maia@gmail.com', 39, 3);
 
 -- --------------------------------------------------------
 
@@ -126,38 +113,6 @@ CREATE TABLE `evento` (
   `fk_Turma_Id_Turma` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Despejando dados para a tabela `evento`
---
-
-INSERT INTO `evento` (`id`, `nome`, `time_from`, `time_to`, `descricao`, `tipo`, `dia`, `mes`, `ano`, `fk_Turma_Id_Turma`) VALUES
-(1, 'prova', '12:12', '12:21', 'matéria: dor', 'Português', 2, 5, 2025, NULL),
-(2, 'TESTE LOUCO', '14:41', '20:00', 'apenas loucuras', 'Urgente', 0, 0, 0, NULL),
-(3, 'provinha', '15:00', '18:00', 'prova', 'Ciencias', 25, 5, 2025, NULL),
-(4, 'Teste', '12:00', '13:00', 'teste', 'Ciencias', 28, 5, 2025, NULL),
-(5, 'tetse', '12:00', '14:00', 'teste', 'Urgente', 2, 6, 2025, 3),
-(6, 'Teste pra mostrar', '12:00', '15:00', 'teste', 'Urgente', 2, 6, 2025, 1),
-(7, 'teste de cor', '15:00', '15:00', 'cor', 'louca', 2, 6, 2025, 3),
-(8, 'teste de cor dnv', '15:00', '20:50', 'cor', 'allaa', 2, 6, 2025, 3),
-(9, 'cor tesye', '19:10', '20:50', 'teste', 'bri', 2, 6, 2025, 3),
-(10, 'Teste1 com o Paulão', '12:00', '20:50', 'teste', 'lepo', 2, 6, 2025, 3),
-(11, 'tsetse da cor', '12:00', '13:00', 'corzada xd', 'pop', 2, 6, 2025, 3);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `eventos`
---
-
-CREATE TABLE `eventos` (
-  `Id_Evento` int(11) NOT NULL,
-  `Tipo_Evento` varchar(100) DEFAULT NULL,
-  `Data_Evento` date DEFAULT NULL,
-  `Desc_Evento` varchar(500) DEFAULT NULL,
-  `fk_Professores_Id_Prof` int(11) DEFAULT NULL,
-  `fk_Coordenadores_Id_Coord` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -170,20 +125,6 @@ CREATE TABLE `materias` (
   `fk_Coordenadores_Id_Coord` int(11) DEFAULT NULL,
   `cor_materia` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `materias`
---
-
-INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`, `cor_materia`) VALUES
-(1, 'Ciencias', 5, NULL),
-(3, 'Matemática', 5, NULL),
-(4, 'Português', 5, NULL),
-(5, 'Geografia', 5, NULL),
-(7, 'louca', 5, NULL),
-(9, 'bri', 5, NULL),
-(10, 'lepo', 5, NULL),
-(11, 'pop', 5, '#63db00');
 
 -- --------------------------------------------------------
 
@@ -317,14 +258,6 @@ ALTER TABLE `evento`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `eventos`
---
-ALTER TABLE `eventos`
-  ADD PRIMARY KEY (`Id_Evento`),
-  ADD KEY `FK_Eventos_2` (`fk_Professores_Id_Prof`),
-  ADD KEY `FK_Eventos_3` (`fk_Coordenadores_Id_Coord`);
-
---
 -- Índices de tabela `materias`
 --
 ALTER TABLE `materias`
@@ -373,7 +306,7 @@ ALTER TABLE `visualiza`
 -- AUTO_INCREMENT de tabela `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `Id_Aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `Id_Aluno` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `coordenadores`
@@ -391,19 +324,13 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT de tabela `eventos`
---
-ALTER TABLE `eventos`
-  MODIFY `Id_Evento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Id_Materia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `professores`
@@ -445,13 +372,6 @@ ALTER TABLE `cursos`
 ALTER TABLE `ensina`
   ADD CONSTRAINT `FK_Ensina_1` FOREIGN KEY (`fk_Turma_Id_Turma`) REFERENCES `turma` (`Id_Turma`),
   ADD CONSTRAINT `FK_Ensina_2` FOREIGN KEY (`fk_Professores_Id_Prof`) REFERENCES `professores` (`Id_Prof`);
-
---
--- Restrições para tabelas `eventos`
---
-ALTER TABLE `eventos`
-  ADD CONSTRAINT `FK_Eventos_2` FOREIGN KEY (`fk_Professores_Id_Prof`) REFERENCES `professores` (`Id_Prof`),
-  ADD CONSTRAINT `FK_Eventos_3` FOREIGN KEY (`fk_Coordenadores_Id_Coord`) REFERENCES `coordenadores` (`Id_Coord`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
