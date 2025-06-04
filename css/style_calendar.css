@@ -320,10 +320,6 @@
   margin-left: 20px;
 } 
 
-.Urgente{
-  color: red;
-}
-
 .events .event:hover i {
   color: #fff;
 }

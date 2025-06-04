@@ -239,16 +239,16 @@ function updateEvents(date) {
       event.events.forEach((event) => {
         // Busca a cor da matéria do evento
         let cor = event.cor_materia || '';
-        let turmaInfo = event.turma_nome ? `<div class='event-turma-info'><b>Turma:</b> ${event.turma_nome}</div>` : '';
+        let turmaInfo = event.turma_nome ? ` ${event.turma_nome}` : '';
         events += `<div class="event">
             <div class="title ${event.type}">
               <i class="fas fa-circle" style="color:${cor}"></i>
-              <h3 class="event-title">${event.type}: ${event.title}</h3><span class="event-time">${event.time}</span>
+              <h3 class="event-title" style="color:${cor}">${event.type} : ${turmaInfo}</h3><span class="event-time">${event.time}</span>
             </div>
             <div class="event-time">
-              <p>${event.description}</p>
+              <p> ${event.title}: ${event.description}</p>
             </div>
-            ${turmaInfo}
+            
         </div>`;
       });
     }
