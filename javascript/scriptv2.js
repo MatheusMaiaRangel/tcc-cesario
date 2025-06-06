@@ -290,10 +290,8 @@ addEventTo.addEventListener("input", (e) => {
 // =======================
 // ENVIO DE EVENTO (APENAS UM BLOCO!)
 // =======================
-document.getElementById('add-event-form').addEventListener('submit', function(e) {
+document.getElementById('add-event-form').addEventListener('submit', async function(e) {
   e.preventDefault();
-
-  // Preencher os campos hidden com os valores do dia/mês/ano selecionados
   document.getElementById("event-day-input").value = activeDay;
   document.getElementById("event-month-input").value = month + 1;
   document.getElementById("event-year-input").value = year;
@@ -304,12 +302,59 @@ document.getElementById('add-event-form').addEventListener('submit', function(e)
   const eventType = addEventType.value.trim();
   const eventDesc = addEventDescription.value.trim();
   const eventTurma = document.querySelector('.event-turma').value;
+  const eventPredio = document.querySelector('.event-predio').value;
 
   if (!eventTitle || !eventTimeFrom || !eventTimeTo || !eventType || !eventDesc || !eventTurma) {
     alert("Preencha todos os campos obrigatórios.");
     return;
   }
 
+  // Se for para todas as turmas do prédio
+  if (eventTurma === 'ALL_BY_BUILDING' && eventPredio) {
+    // Pega todas as turmas do prédio selecionado
+    const turmasDoPredio = turmasCache.filter(opt => opt.getAttribute('data-predio') === eventPredio);
+    let sucesso = 0, falha = 0;
+    for (const turmaOpt of turmasDoPredio) {
+      const turmaId = turmaOpt.value;
+      const newEvent = {
+        event_nome: eventTitle,
+        event_time_from: eventTimeFrom,
+        event_time_to: eventTimeTo,
+        event_description: eventDesc,
+        event_type: eventType,
+        event_day: activeDay,
+        event_month: month + 1,
+        event_year: year,
+        event_turma: turmaId
+      };
+      try {
+        const resp = await fetch("addEvento.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newEvent)
+        });
+        const data = await resp.json();
+        if (data.status === "success") sucesso++;
+        else falha++;
+      } catch {
+        falha++;
+      }
+    }
+    alert(`Eventos enviados: ${sucesso}, falhas: ${falha}`);
+    if (sucesso) {
+      getEvents();
+      addEventTitle.value = "";
+      addEventFrom.value = "";
+      addEventTo.value = "";
+      addEventType.value = "";
+      addEventDescription.value = "";
+      turmaSelect.value = "";
+      predioSelect.value = "";
+    }
+    return;
+  }
+
+  // Caso padrão (apenas uma turma)
   const newEvent = {
     event_nome: eventTitle,
     event_time_from: eventTimeFrom,
@@ -334,13 +379,13 @@ document.getElementById('add-event-form').addEventListener('submit', function(e)
       alert(data.message);
       if (data.status === "success") {
         getEvents(); // Recarrega os eventos após salvar
-        // Limpa os campos do formulário
         addEventTitle.value = "";
         addEventFrom.value = "";
         addEventTo.value = "";
         addEventType.value = "";
         addEventDescription.value = "";
-        document.querySelector('.event-turma').value = "";
+        turmaSelect.value = "";
+        predioSelect.value = "";
       }
     })
     .catch((error) => {
@@ -432,3 +477,150 @@ function convertTime(time) {
   time = timeHour + ":" + timeMin + " " + timeFormat;
   return time;
 }
+
+// --- FILTRO DE TURMAS POR PRÉDIO E ENVIO PARA TODAS AS TURMAS DO PRÉDIO ---
+const turmaSelect = document.querySelector('.event-turma');
+const predioSelect = document.querySelector('.event-predio');
+// O cache deve ser feito logo no carregamento, com todas as opções originais
+let turmasCache = [];
+if (turmaSelect) {
+  turmasCache = Array.from(document.querySelectorAll('.event-turma option'))
+    .filter(opt => opt.value && opt.value !== 'ALL_BY_BUILDING' && opt.getAttribute('data-predio'));
+}
+
+if (predioSelect && turmaSelect) {
+  predioSelect.addEventListener('change', function() {
+    const predioSelecionado = this.value;
+    turmaSelect.innerHTML = '<option value="">Selecione a turma</option>';
+    // Salva o valor atual da matéria
+    const eventTypeSelect = document.querySelector('.event-type');
+    const selectedEventType = eventTypeSelect ? eventTypeSelect.value : null;
+    // Adiciona a opção de todas as turmas do prédio SEMPRE que um prédio for selecionado
+    if (predioSelecionado) {
+      const optAll = document.createElement("option");
+      optAll.value = "ALL_BY_BUILDING";
+      optAll.textContent = "Todas as turmas do prédio selecionado";
+      optAll.style.fontWeight = 'bold';
+      turmaSelect.appendChild(optAll);
+    }
+    turmasCache.forEach(opt => {
+      if (!predioSelecionado || opt.getAttribute('data-predio') === predioSelecionado) {
+        turmaSelect.appendChild(opt.cloneNode(true));
+      }
+    });
+    // Restaura o valor da matéria
+    if (eventTypeSelect && selectedEventType) {
+      eventTypeSelect.value = selectedEventType;
+    }
+  });
+}
+
+// --- ENVIO DO FORMULÁRIO ---
+document.getElementById('add-event-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  document.getElementById("event-day-input").value = activeDay;
+  document.getElementById("event-month-input").value = month + 1;
+  document.getElementById("event-year-input").value = year;
+
+  const eventTitle = addEventTitle.value.trim();
+  const eventTimeFrom = addEventFrom.value.trim();
+  const eventTimeTo = addEventTo.value.trim();
+  const eventType = addEventType.value.trim();
+  const eventDesc = addEventDescription.value.trim();
+  const eventTurma = turmaSelect.value;
+  const eventPredio = predioSelect.value;
+
+  if (!eventTitle || !eventTimeFrom || !eventTimeTo || !eventType || !eventDesc || !eventTurma) {
+    alert("Preencha todos os campos obrigatórios.");
+    return;
+  }
+
+  // Se for para todas as turmas do prédio
+  if (eventTurma === 'ALL_BY_BUILDING' && eventPredio) {
+    // Busca todos os IDs das turmas do prédio selecionado
+    const turmasDoPredio = turmasCache.filter(opt => opt.getAttribute('data-predio') === eventPredio);
+    if (turmasDoPredio.length === 0) {
+      alert('Nenhuma turma encontrada para o prédio selecionado.');
+      return;
+    }
+    let sucesso = 0, falha = 0;
+    for (const turmaOpt of turmasDoPredio) {
+      const turmaId = turmaOpt.value;
+      const newEvent = {
+        event_nome: eventTitle,
+        event_time_from: eventTimeFrom,
+        event_time_to: eventTimeTo,
+        event_description: eventDesc,
+        event_type: eventType,
+        event_day: activeDay,
+        event_month: month + 1,
+        event_year: year,
+        event_turma: turmaId
+      };
+      try {
+        const resp = await fetch("addEvento.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newEvent)
+        });
+        const data = await resp.json();
+        if (data.status === "success") sucesso++;
+        else falha++;
+      } catch {
+        falha++;
+      }
+    }
+    alert(`Eventos enviados: ${sucesso}, falhas: ${falha}`);
+    if (sucesso) {
+      getEvents();
+      addEventTitle.value = "";
+      addEventFrom.value = "";
+      addEventTo.value = "";
+      addEventType.value = "";
+      addEventDescription.value = "";
+      turmaSelect.value = "";
+      predioSelect.value = "";
+    }
+    // Se não houver sucesso, não limpa os campos para facilitar correção
+    return;
+  }
+
+  // Caso padrão (apenas uma turma)
+  const newEvent = {
+    event_nome: eventTitle,
+    event_time_from: eventTimeFrom,
+    event_time_to: eventTimeTo,
+    event_description: eventDesc,
+    event_type: eventType,
+    event_day: activeDay,
+    event_month: month + 1,
+    event_year: year,
+    event_turma: eventTurma
+  };
+
+  fetch("addEvento.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newEvent),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert(data.message);
+      if (data.status === "success") {
+        getEvents(); // Recarrega os eventos após salvar
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        addEventType.value = "";
+        addEventDescription.value = "";
+        turmaSelect.value = "";
+        predioSelect.value = "";
+      }
+    })
+    .catch((error) => {
+      alert("Erro ao salvar evento.");
+      console.error(error);
+    });
+});
