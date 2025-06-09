@@ -70,6 +70,6 @@ $_SESSION['cadastro_aluno'] = [
     'senha' => $senha
 ];
 
-header("Location: verifica_serie.html");
+header("Location: verifica_serie_.php");
 exit();
 ?>
