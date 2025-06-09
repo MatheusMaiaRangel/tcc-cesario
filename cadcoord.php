@@ -82,14 +82,13 @@ if ($stmt->execute()) {
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 title: 'Sucesso!',
-                text: 'Senha alterada com sucesso!',
+                text: 'Coordenador cadastrado com sucesso!',
                 icon: 'success'
             }).then(function() {
                 window.location.href = 'login.html';
             });
         });
     </script>";
-    echo "<script>alert('Erro ao cadastrar coordenador: " . $stmt->error . "'); window.history.back();</script>";
 }
 
 // So pra ter certeza
