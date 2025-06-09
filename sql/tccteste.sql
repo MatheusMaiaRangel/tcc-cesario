@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Jun-2025 às 15:28
+-- Tempo de geração: 09-Jun-2025 às 15:33
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -247,7 +247,10 @@ INSERT INTO `turma` (`Id_Turma`, `Nome_Turma`, `fk_Cursos_Id_Curso`, `fk_Serie_I
 (3, '3º Informática para Internet - Noturno', 1, 3, 2),
 (4, '1° Administração - Noturno', 2, 1, 2),
 (5, '2° Administração - Noturno', 2, 2, 2),
-(6, '3° Administração - Noturno', 2, 3, 2);
+(6, '3° Administração - Noturno', 2, 3, 2),
+(7, '1° Desenvolvimento de Sistemas - Noturno', 3, 1, 3),
+(8, '2° Desenvolvimento de Sistemas - Noturno', 3, 2, 3),
+(9, '3° Desenvolvimento de Sistemas - Noturno', 3, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -403,7 +406,7 @@ ALTER TABLE `serie`
 -- AUTO_INCREMENT de tabela `turma`
 --
 ALTER TABLE `turma`
-  MODIFY `Id_Turma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id_Turma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restrições para despejos de tabelas
