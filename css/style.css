@@ -124,6 +124,19 @@ button[type="submit"]:hover,
   margin-top: 20px;
 }
 
+.btn-logout {
+  background: linear-gradient(#db0a0a) !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 30px !important;
+  font-size: 1.1rem !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4) !important;
+  transition: all 0.3s ease !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+}
+
 /* CONTAINERS E LAYOUTS */
 .container-login {
   width: 90%;
