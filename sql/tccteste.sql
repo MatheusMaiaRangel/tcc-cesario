@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Jun-2025 às 15:33
+-- Tempo de geração: 10/06/2025 às 01:50
 -- Versão do servidor: 10.4.32-MariaDB
--- versão do PHP: 8.2.12
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `alunos`
+-- Estrutura para tabela `alunos`
 --
 
 CREATE TABLE `alunos` (
@@ -38,10 +38,17 @@ CREATE TABLE `alunos` (
   `fk_Turma_Id_Turma` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `alunos`
+--
+
+INSERT INTO `alunos` (`Nome_Aluno`, `NomeSocial_Aluno`, `Cpf_Aluno`, `Cel_Aluno`, `Senha_Aluno`, `Email_Aluno`, `Id_Aluno`, `fk_Turma_Id_Turma`) VALUES
+('Aluno Genérico', '', '66666666666', '19999999999', '$2y$10$hijvAyQO8vUR5p1DWY2MUuMzYrgHHFugF3dIcy3ZEp.GqElAvZHza', 'alunogenerico@gmail.com', 1, 12);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `coordenadores`
+-- Estrutura para tabela `coordenadores`
 --
 
 CREATE TABLE `coordenadores` (
@@ -55,7 +62,7 @@ CREATE TABLE `coordenadores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `coordenadores`
+-- Despejando dados para a tabela `coordenadores`
 --
 
 INSERT INTO `coordenadores` (`Nome_Coord`, `NomeSocial_Coord`, `Cpf_Coord`, `Cel_Coord`, `Senha_Coord`, `Email_Coord`, `Id_Coord`) VALUES
@@ -67,7 +74,7 @@ INSERT INTO `coordenadores` (`Nome_Coord`, `NomeSocial_Coord`, `Cpf_Coord`, `Cel
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cursos`
+-- Estrutura para tabela `cursos`
 --
 
 CREATE TABLE `cursos` (
@@ -77,7 +84,7 @@ CREATE TABLE `cursos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `cursos`
+-- Despejando dados para a tabela `cursos`
 --
 
 INSERT INTO `cursos` (`Id_Curso`, `Nome_Curso`, `fk_Coordenadores_Id_Coord`) VALUES
@@ -95,7 +102,7 @@ INSERT INTO `cursos` (`Id_Curso`, `Nome_Curso`, `fk_Coordenadores_Id_Coord`) VAL
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `ensina`
+-- Estrutura para tabela `ensina`
 --
 
 CREATE TABLE `ensina` (
@@ -106,7 +113,7 @@ CREATE TABLE `ensina` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `evento`
+-- Estrutura para tabela `evento`
 --
 
 CREATE TABLE `evento` (
@@ -125,7 +132,7 @@ CREATE TABLE `evento` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `materias`
+-- Estrutura para tabela `materias`
 --
 
 CREATE TABLE `materias` (
@@ -136,7 +143,7 @@ CREATE TABLE `materias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `materias`
+-- Despejando dados para a tabela `materias`
 --
 
 INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`, `cor_materia`) VALUES
@@ -151,7 +158,7 @@ INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pertence`
+-- Estrutura para tabela `pertence`
 --
 
 CREATE TABLE `pertence` (
@@ -162,7 +169,7 @@ CREATE TABLE `pertence` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `predio`
+-- Estrutura para tabela `predio`
 --
 
 CREATE TABLE `predio` (
@@ -171,7 +178,7 @@ CREATE TABLE `predio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `predio`
+-- Despejando dados para a tabela `predio`
 --
 
 INSERT INTO `predio` (`id`, `nome`) VALUES
@@ -182,7 +189,7 @@ INSERT INTO `predio` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `professores`
+-- Estrutura para tabela `professores`
 --
 
 CREATE TABLE `professores` (
@@ -196,7 +203,7 @@ CREATE TABLE `professores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `professores`
+-- Despejando dados para a tabela `professores`
 --
 
 INSERT INTO `professores` (`Id_Prof`, `Email_Prof`, `Senha_Prof`, `Cel_Prof`, `Cpf_Prof`, `NomeSocial_Prof`, `Nome_Prof`) VALUES
@@ -205,7 +212,7 @@ INSERT INTO `professores` (`Id_Prof`, `Email_Prof`, `Senha_Prof`, `Cel_Prof`, `C
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `serie`
+-- Estrutura para tabela `serie`
 --
 
 CREATE TABLE `serie` (
@@ -214,7 +221,7 @@ CREATE TABLE `serie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `serie`
+-- Despejando dados para a tabela `serie`
 --
 
 INSERT INTO `serie` (`Id_Serie`, `Ano_Serie`) VALUES
@@ -226,7 +233,7 @@ INSERT INTO `serie` (`Id_Serie`, `Ano_Serie`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `turma`
+-- Estrutura para tabela `turma`
 --
 
 CREATE TABLE `turma` (
@@ -238,24 +245,45 @@ CREATE TABLE `turma` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `turma`
+-- Despejando dados para a tabela `turma`
 --
 
 INSERT INTO `turma` (`Id_Turma`, `Nome_Turma`, `fk_Cursos_Id_Curso`, `fk_Serie_Id_Serie`, `id_predio`) VALUES
-(1, '1° Informática para Internet - Noturno', 1, 1, 2),
-(2, '2° Informática para Internet - Noturno', 1, 2, 2),
-(3, '3º Informática para Internet - Noturno', 1, 3, 2),
-(4, '1° Administração - Noturno', 2, 1, 2),
-(5, '2° Administração - Noturno', 2, 2, 2),
-(6, '3° Administração - Noturno', 2, 3, 2),
+(1, '1° Informática para Internet - Noturno', 1, 1, 3),
+(2, '2° Informática para Internet - Noturno', 1, 2, 3),
+(3, '3º Informática para Internet - Noturno', 1, 3, 3),
+(4, '1° Administração - Noturno', 2, 1, 3),
+(5, '2° Administração - Noturno', 2, 2, 3),
+(6, '3° Administração - Noturno', 2, 3, 3),
 (7, '1° Desenvolvimento de Sistemas - Noturno', 3, 1, 3),
 (8, '2° Desenvolvimento de Sistemas - Noturno', 3, 2, 3),
-(9, '3° Desenvolvimento de Sistemas - Noturno', 3, 3, 3);
+(9, '3° Desenvolvimento de Sistemas - Noturno', 3, 3, 3),
+(10, '1º Desenvolvimento de Sistemas - Diurno', 4, 1, 2),
+(11, '2º Desenvolvimento de Sistemas - Diurno', 4, 2, 2),
+(12, '3º Desenvolvimento de Sistemas - Diurno', 4, 3, 2),
+(13, '1º Administração - Diurno', 5, 1, 2),
+(14, '2º Administração - Diurno', 5, 2, 2),
+(15, '3º Administração - Diurno', 5, 3, 2),
+(16, '1º Meio Ambiente - Diurno', 6, 1, 1),
+(17, '2º Meio Ambiente - Diurno', 6, 2, 1),
+(18, '3º Meio Ambiente - Diurno', 6, 3, 1),
+(19, '1º Química - Diurno', 7, 1, 1),
+(20, '2º Química - Diurno', 7, 2, 1),
+(21, '3º Química - Diurno', 7, 3, 1),
+(22, '1º Mecatrônica - Diurno', 8, 1, 1),
+(23, '2º Mecatrônica - Diurno', 8, 2, 1),
+(24, '3º Mecatrônica - Diurno', 8, 3, 1),
+(25, '1º Nutrição - Diurno', 9, 1, 1),
+(26, '2º Nutrição - Diurno', 9, 2, 1),
+(27, '3º Nutrição - Diurno', 9, 3, 1),
+(28, '1º Recursos Humanos - Noturno', 10, 1, 3),
+(29, '2º Recursos Humanos - Noturno', 10, 2, 3),
+(30, '3º Recursos Humanos - Noturno', 10, 3, 3);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `visualiza`
+-- Estrutura para tabela `visualiza`
 --
 
 CREATE TABLE `visualiza` (
@@ -268,7 +296,7 @@ CREATE TABLE `visualiza` (
 --
 
 --
--- Índices para tabela `alunos`
+-- Índices de tabela `alunos`
 --
 ALTER TABLE `alunos`
   ADD PRIMARY KEY (`Id_Aluno`),
@@ -276,66 +304,66 @@ ALTER TABLE `alunos`
   ADD KEY `FK_Alunos_2` (`fk_Turma_Id_Turma`);
 
 --
--- Índices para tabela `coordenadores`
+-- Índices de tabela `coordenadores`
 --
 ALTER TABLE `coordenadores`
   ADD PRIMARY KEY (`Id_Coord`),
   ADD UNIQUE KEY `unique_cpf_coord` (`Cpf_Coord`);
 
 --
--- Índices para tabela `cursos`
+-- Índices de tabela `cursos`
 --
 ALTER TABLE `cursos`
   ADD PRIMARY KEY (`Id_Curso`),
   ADD KEY `FK_Cursos_2` (`fk_Coordenadores_Id_Coord`);
 
 --
--- Índices para tabela `ensina`
+-- Índices de tabela `ensina`
 --
 ALTER TABLE `ensina`
   ADD KEY `FK_Ensina_1` (`fk_Turma_Id_Turma`),
   ADD KEY `FK_Ensina_2` (`fk_Professores_Id_Prof`);
 
 --
--- Índices para tabela `evento`
+-- Índices de tabela `evento`
 --
 ALTER TABLE `evento`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `materias`
+-- Índices de tabela `materias`
 --
 ALTER TABLE `materias`
   ADD PRIMARY KEY (`Id_Materia`);
 
 --
--- Índices para tabela `pertence`
+-- Índices de tabela `pertence`
 --
 ALTER TABLE `pertence`
   ADD KEY `FK_Pertence_1` (`fk_Turma_Id_Turma`),
   ADD KEY `FK_Pertence_2` (`fk_Serie_Id_Serie`);
 
 --
--- Índices para tabela `predio`
+-- Índices de tabela `predio`
 --
 ALTER TABLE `predio`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `professores`
+-- Índices de tabela `professores`
 --
 ALTER TABLE `professores`
   ADD PRIMARY KEY (`Id_Prof`),
   ADD UNIQUE KEY `unique_cpf_prof` (`Cpf_Prof`);
 
 --
--- Índices para tabela `serie`
+-- Índices de tabela `serie`
 --
 ALTER TABLE `serie`
   ADD PRIMARY KEY (`Id_Serie`);
 
 --
--- Índices para tabela `turma`
+-- Índices de tabela `turma`
 --
 ALTER TABLE `turma`
   ADD PRIMARY KEY (`Id_Turma`),
@@ -344,21 +372,21 @@ ALTER TABLE `turma`
   ADD KEY `fk_turma_predio` (`id_predio`);
 
 --
--- Índices para tabela `visualiza`
+-- Índices de tabela `visualiza`
 --
 ALTER TABLE `visualiza`
   ADD KEY `FK_Visualiza_1` (`fk_Turma_Id_Turma`),
   ADD KEY `FK_Visualiza_2` (`fk_Eventos_Id_Evento`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `Id_Aluno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `coordenadores`
@@ -406,33 +434,33 @@ ALTER TABLE `serie`
 -- AUTO_INCREMENT de tabela `turma`
 --
 ALTER TABLE `turma`
-  MODIFY `Id_Turma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Id_Turma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `alunos`
+-- Restrições para tabelas `alunos`
 --
 ALTER TABLE `alunos`
   ADD CONSTRAINT `FK_Alunos_2` FOREIGN KEY (`fk_Turma_Id_Turma`) REFERENCES `turma` (`Id_Turma`);
 
 --
--- Limitadores para a tabela `cursos`
+-- Restrições para tabelas `cursos`
 --
 ALTER TABLE `cursos`
   ADD CONSTRAINT `FK_Cursos_2` FOREIGN KEY (`fk_Coordenadores_Id_Coord`) REFERENCES `coordenadores` (`Id_Coord`);
 
 --
--- Limitadores para a tabela `ensina`
+-- Restrições para tabelas `ensina`
 --
 ALTER TABLE `ensina`
   ADD CONSTRAINT `FK_Ensina_1` FOREIGN KEY (`fk_Turma_Id_Turma`) REFERENCES `turma` (`Id_Turma`),
   ADD CONSTRAINT `FK_Ensina_2` FOREIGN KEY (`fk_Professores_Id_Prof`) REFERENCES `professores` (`Id_Prof`);
 
 --
--- Limitadores para a tabela `turma`
+-- Restrições para tabelas `turma`
 --
 ALTER TABLE `turma`
   ADD CONSTRAINT `fk_turma_predio` FOREIGN KEY (`id_predio`) REFERENCES `predio` (`id`);
