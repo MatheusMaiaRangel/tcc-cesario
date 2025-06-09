@@ -20,14 +20,25 @@
         <option value="primeiro">1° Ano</option>
         <option value="segundo">2° Ano</option>
         <option value="terceiro">3° Ano</option>
+        <option value="terceiro">4° Ano</option>
       </select>
       
       <label for="curso">Seu curso:</label>
-      <select id="curso" name="curso" required>
-        <option value="">Selecione</option>
-        <option value="infonet">Informática para Internet</option>
-        <option value="adm">Administração</option>
-      </select>
+      <?php
+      $conn = new mysqli("localhost", "root", "", "tccteste");
+      if ($conn->connect_error) {
+        echo '<select id="curso" name="curso" required><option value="">Erro ao carregar cursos</option></select>';
+      } else {
+        $resCursos = $conn->query("SELECT Id_Curso, Nome_Curso FROM cursos");
+        echo '<select id="curso" name="curso" required>';
+        echo '<option value="">Selecione</option>';
+        while ($curso = $resCursos->fetch_assoc()) {
+          echo '<option value="' . htmlspecialchars($curso['Id_Curso']) . '">' . htmlspecialchars($curso['Nome_Curso']) . '</option>';
+        }
+        echo '</select>';
+        $conn->close();
+      }
+      ?>
       <button type="submit">Enviar</button>
       <a href ="cadastro.html">
       <img src="img/left-arrow (1).png" alt="Voltar" class="back-button"></a>
