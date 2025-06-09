@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Jun-2025 às 15:08
+-- Tempo de geração: 09-Jun-2025 às 15:28
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -59,10 +59,10 @@ CREATE TABLE `coordenadores` (
 --
 
 INSERT INTO `coordenadores` (`Nome_Coord`, `NomeSocial_Coord`, `Cpf_Coord`, `Cel_Coord`, `Senha_Coord`, `Email_Coord`, `Id_Coord`) VALUES
+('Coord Genérico', '', '00000000001', '19999999999', '$2y$10$RB/O/5e/mb72fctZTGYOguS9UTRTlmR9GSykVZ1FpmmFX.nZiBcMi', 'coordgenerico@gmail.com', 1),
 ('coord master', 'o mestre', '00000000000', '19999999999', '$2y$10$KZkfwTt34ODwk8OB/m8hLeetv35tJsKnW/DZGUSgGcmfdjlEmHwdy', 'master@gmail.com', 5),
 ('Celoto', '', '11111111111', '19999999999', '$2y$10$DLwh53i3DFWHT6wjBbIyPOna9aLgG5x7I66fyBOhE82r8vLbFcJyO', 'celoto@gmail.com', 6),
-('Calixto', '', '22222222222', '19999999999', '$2y$10$HVZZRKA3BmlSEcx2BiqCaevTQ3bGK3veKwa6TgqAJcqQHf8abF97.', 'calixto@gmail.com', 7),
-('Coord Genérico', '', '00000000001', '19999999999', '$2y$10$RB/O/5e/mb72fctZTGYOguS9UTRTlmR9GSykVZ1FpmmFX.nZiBcMi', 'coordgenerico@gmail.com', 11);
+('Calixto', '', '22222222222', '19999999999', '$2y$10$HVZZRKA3BmlSEcx2BiqCaevTQ3bGK3veKwa6TgqAJcqQHf8abF97.', 'calixto@gmail.com', 7);
 
 -- --------------------------------------------------------
 
@@ -82,7 +82,15 @@ CREATE TABLE `cursos` (
 
 INSERT INTO `cursos` (`Id_Curso`, `Nome_Curso`, `fk_Coordenadores_Id_Coord`) VALUES
 (1, 'Informática para Internet - Noturno', 6),
-(2, 'Administração - Noturno', 7);
+(2, 'Administração - Noturno', 7),
+(3, 'Desenvolvimento de Sistemas - Noturno', 1),
+(4, 'Desenvolvimento de Sistemas - Diurno', 1),
+(5, 'Administração - Diurno', 1),
+(6, 'Meio Ambiente - Diurno', 1),
+(7, 'Química - Diurno', 1),
+(8, 'Mecatrônica - Diurno', 1),
+(9, 'Nutrição - Diurno', 1),
+(10, 'Recursos Humanos - Noturno', 1);
 
 -- --------------------------------------------------------
 
@@ -359,7 +367,7 @@ ALTER TABLE `coordenadores`
 -- AUTO_INCREMENT de tabela `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `Id_Curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id_Curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `evento`
