@@ -92,14 +92,14 @@ if ($stmt->execute()) {
 }
 
 // So pra ter certeza
-var_dump([
+/*var_dump([
     'nome' => $nome,
     'nomeSocial' => $nomeSocial,
     'cpf' => $cpf,
     'celular' => $celular,
     'email' => $email,
     'senha_hash' => $senha
-]);
+]);*/
 
 $conn->close();
 ?>
