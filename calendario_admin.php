@@ -44,6 +44,9 @@ if (!isset($_SESSION['usuario'])) {
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a class="nav-link text-white" href="gerenciar_materias.php">Matérias</a></li>
         </ul>
+        <form class="d-flex" method="post" action="logout.php">
+          <button class="btn-logout" type="submit">Sair</button>
+        </form>
       </div>
     </div>
   </nav>
