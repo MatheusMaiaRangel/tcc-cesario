@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06/06/2025 às 03:12
+-- Tempo de geração: 09-Jun-2025 às 15:08
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `alunos`
+-- Estrutura da tabela `alunos`
 --
 
 CREATE TABLE `alunos` (
@@ -41,7 +41,7 @@ CREATE TABLE `alunos` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `coordenadores`
+-- Estrutura da tabela `coordenadores`
 --
 
 CREATE TABLE `coordenadores` (
@@ -55,18 +55,19 @@ CREATE TABLE `coordenadores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `coordenadores`
+-- Extraindo dados da tabela `coordenadores`
 --
 
 INSERT INTO `coordenadores` (`Nome_Coord`, `NomeSocial_Coord`, `Cpf_Coord`, `Cel_Coord`, `Senha_Coord`, `Email_Coord`, `Id_Coord`) VALUES
 ('coord master', 'o mestre', '00000000000', '19999999999', '$2y$10$KZkfwTt34ODwk8OB/m8hLeetv35tJsKnW/DZGUSgGcmfdjlEmHwdy', 'master@gmail.com', 5),
 ('Celoto', '', '11111111111', '19999999999', '$2y$10$DLwh53i3DFWHT6wjBbIyPOna9aLgG5x7I66fyBOhE82r8vLbFcJyO', 'celoto@gmail.com', 6),
-('Calixto', '', '22222222222', '19999999999', '$2y$10$HVZZRKA3BmlSEcx2BiqCaevTQ3bGK3veKwa6TgqAJcqQHf8abF97.', 'calixto@gmail.com', 7);
+('Calixto', '', '22222222222', '19999999999', '$2y$10$HVZZRKA3BmlSEcx2BiqCaevTQ3bGK3veKwa6TgqAJcqQHf8abF97.', 'calixto@gmail.com', 7),
+('Coord Genérico', '', '00000000001', '19999999999', '$2y$10$RB/O/5e/mb72fctZTGYOguS9UTRTlmR9GSykVZ1FpmmFX.nZiBcMi', 'coordgenerico@gmail.com', 11);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cursos`
+-- Estrutura da tabela `cursos`
 --
 
 CREATE TABLE `cursos` (
@@ -76,7 +77,7 @@ CREATE TABLE `cursos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `cursos`
+-- Extraindo dados da tabela `cursos`
 --
 
 INSERT INTO `cursos` (`Id_Curso`, `Nome_Curso`, `fk_Coordenadores_Id_Coord`) VALUES
@@ -86,7 +87,7 @@ INSERT INTO `cursos` (`Id_Curso`, `Nome_Curso`, `fk_Coordenadores_Id_Coord`) VAL
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `ensina`
+-- Estrutura da tabela `ensina`
 --
 
 CREATE TABLE `ensina` (
@@ -97,7 +98,7 @@ CREATE TABLE `ensina` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `evento`
+-- Estrutura da tabela `evento`
 --
 
 CREATE TABLE `evento` (
@@ -113,20 +114,10 @@ CREATE TABLE `evento` (
   `fk_Turma_Id_Turma` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Despejando dados para a tabela `evento`
---
-
-INSERT INTO `evento` (`id`, `nome`, `time_from`, `time_to`, `descricao`, `tipo`, `dia`, `mes`, `ano`, `fk_Turma_Id_Turma`) VALUES
-(1, 'Prova - Biologia', '11:40', '12:30', 'O aventureiro', 'Biologia', 3, 6, 2025, 5),
-(2, 'Prova - Biologia', '11:40', '12:30', 'O aventureiro', 'Biologia', 3, 6, 2025, 6),
-(3, 'Prova', '10:00', '11:00', 'Verbo To be', 'Inglês', 6, 6, 2025, 6),
-(4, 'Prova', '12:00', '13:00', 'Teste com o nosso professor', 'Urgente', 5, 6, 2025, 6);
-
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `materias`
+-- Estrutura da tabela `materias`
 --
 
 CREATE TABLE `materias` (
@@ -137,7 +128,7 @@ CREATE TABLE `materias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `materias`
+-- Extraindo dados da tabela `materias`
 --
 
 INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord`, `cor_materia`) VALUES
@@ -152,7 +143,7 @@ INSERT INTO `materias` (`Id_Materia`, `Nome_Materia`, `fk_Coordenadores_Id_Coord
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `pertence`
+-- Estrutura da tabela `pertence`
 --
 
 CREATE TABLE `pertence` (
@@ -163,7 +154,7 @@ CREATE TABLE `pertence` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `predio`
+-- Estrutura da tabela `predio`
 --
 
 CREATE TABLE `predio` (
@@ -172,7 +163,7 @@ CREATE TABLE `predio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `predio`
+-- Extraindo dados da tabela `predio`
 --
 
 INSERT INTO `predio` (`id`, `nome`) VALUES
@@ -183,7 +174,7 @@ INSERT INTO `predio` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `professores`
+-- Estrutura da tabela `professores`
 --
 
 CREATE TABLE `professores` (
@@ -197,17 +188,16 @@ CREATE TABLE `professores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `professores`
+-- Extraindo dados da tabela `professores`
 --
 
 INSERT INTO `professores` (`Id_Prof`, `Email_Prof`, `Senha_Prof`, `Cel_Prof`, `Cpf_Prof`, `NomeSocial_Prof`, `Nome_Prof`) VALUES
-(4, 'aa@gmail.com', '$2y$10$BhaAsgULD7sk6E0n3pQFweglcYSEThb3YWJdqpoP9shd7EDKwEIn6', '19999999999', '98988998322', '', 'prof'),
-(5, 'manothi@gmail.com', '$2y$10$I0KJlBTZLGJsvHGpnnn.weYKUtKnloDNdJsN5RmJIaHrhna2CmGe6', '19999999999', '74747474747', 'thiaga', 'mendes');
+(7, 'profteste@gmail.com', '$2y$10$JM0E045OlyHJQxqZCyjjne442l4KkokrdSrKEMrO9yNpn1eU8/YE.', '19999999999', '22222222201', '', 'Prof Teste');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `serie`
+-- Estrutura da tabela `serie`
 --
 
 CREATE TABLE `serie` (
@@ -216,7 +206,7 @@ CREATE TABLE `serie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `serie`
+-- Extraindo dados da tabela `serie`
 --
 
 INSERT INTO `serie` (`Id_Serie`, `Ano_Serie`) VALUES
@@ -228,7 +218,7 @@ INSERT INTO `serie` (`Id_Serie`, `Ano_Serie`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `turma`
+-- Estrutura da tabela `turma`
 --
 
 CREATE TABLE `turma` (
@@ -240,7 +230,7 @@ CREATE TABLE `turma` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `turma`
+-- Extraindo dados da tabela `turma`
 --
 
 INSERT INTO `turma` (`Id_Turma`, `Nome_Turma`, `fk_Cursos_Id_Curso`, `fk_Serie_Id_Serie`, `id_predio`) VALUES
@@ -254,7 +244,7 @@ INSERT INTO `turma` (`Id_Turma`, `Nome_Turma`, `fk_Cursos_Id_Curso`, `fk_Serie_I
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `visualiza`
+-- Estrutura da tabela `visualiza`
 --
 
 CREATE TABLE `visualiza` (
@@ -267,7 +257,7 @@ CREATE TABLE `visualiza` (
 --
 
 --
--- Índices de tabela `alunos`
+-- Índices para tabela `alunos`
 --
 ALTER TABLE `alunos`
   ADD PRIMARY KEY (`Id_Aluno`),
@@ -275,66 +265,66 @@ ALTER TABLE `alunos`
   ADD KEY `FK_Alunos_2` (`fk_Turma_Id_Turma`);
 
 --
--- Índices de tabela `coordenadores`
+-- Índices para tabela `coordenadores`
 --
 ALTER TABLE `coordenadores`
   ADD PRIMARY KEY (`Id_Coord`),
   ADD UNIQUE KEY `unique_cpf_coord` (`Cpf_Coord`);
 
 --
--- Índices de tabela `cursos`
+-- Índices para tabela `cursos`
 --
 ALTER TABLE `cursos`
   ADD PRIMARY KEY (`Id_Curso`),
   ADD KEY `FK_Cursos_2` (`fk_Coordenadores_Id_Coord`);
 
 --
--- Índices de tabela `ensina`
+-- Índices para tabela `ensina`
 --
 ALTER TABLE `ensina`
   ADD KEY `FK_Ensina_1` (`fk_Turma_Id_Turma`),
   ADD KEY `FK_Ensina_2` (`fk_Professores_Id_Prof`);
 
 --
--- Índices de tabela `evento`
+-- Índices para tabela `evento`
 --
 ALTER TABLE `evento`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `materias`
+-- Índices para tabela `materias`
 --
 ALTER TABLE `materias`
   ADD PRIMARY KEY (`Id_Materia`);
 
 --
--- Índices de tabela `pertence`
+-- Índices para tabela `pertence`
 --
 ALTER TABLE `pertence`
   ADD KEY `FK_Pertence_1` (`fk_Turma_Id_Turma`),
   ADD KEY `FK_Pertence_2` (`fk_Serie_Id_Serie`);
 
 --
--- Índices de tabela `predio`
+-- Índices para tabela `predio`
 --
 ALTER TABLE `predio`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `professores`
+-- Índices para tabela `professores`
 --
 ALTER TABLE `professores`
   ADD PRIMARY KEY (`Id_Prof`),
   ADD UNIQUE KEY `unique_cpf_prof` (`Cpf_Prof`);
 
 --
--- Índices de tabela `serie`
+-- Índices para tabela `serie`
 --
 ALTER TABLE `serie`
   ADD PRIMARY KEY (`Id_Serie`);
 
 --
--- Índices de tabela `turma`
+-- Índices para tabela `turma`
 --
 ALTER TABLE `turma`
   ADD PRIMARY KEY (`Id_Turma`),
@@ -343,14 +333,14 @@ ALTER TABLE `turma`
   ADD KEY `fk_turma_predio` (`id_predio`);
 
 --
--- Índices de tabela `visualiza`
+-- Índices para tabela `visualiza`
 --
 ALTER TABLE `visualiza`
   ADD KEY `FK_Visualiza_1` (`fk_Turma_Id_Turma`),
   ADD KEY `FK_Visualiza_2` (`fk_Eventos_Id_Evento`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -363,7 +353,7 @@ ALTER TABLE `alunos`
 -- AUTO_INCREMENT de tabela `coordenadores`
 --
 ALTER TABLE `coordenadores`
-  MODIFY `Id_Coord` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id_Coord` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `cursos`
@@ -393,7 +383,7 @@ ALTER TABLE `predio`
 -- AUTO_INCREMENT de tabela `professores`
 --
 ALTER TABLE `professores`
-  MODIFY `Id_Prof` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id_Prof` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `serie`
@@ -408,30 +398,30 @@ ALTER TABLE `turma`
   MODIFY `Id_Turma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `alunos`
+-- Limitadores para a tabela `alunos`
 --
 ALTER TABLE `alunos`
   ADD CONSTRAINT `FK_Alunos_2` FOREIGN KEY (`fk_Turma_Id_Turma`) REFERENCES `turma` (`Id_Turma`);
 
 --
--- Restrições para tabelas `cursos`
+-- Limitadores para a tabela `cursos`
 --
 ALTER TABLE `cursos`
   ADD CONSTRAINT `FK_Cursos_2` FOREIGN KEY (`fk_Coordenadores_Id_Coord`) REFERENCES `coordenadores` (`Id_Coord`);
 
 --
--- Restrições para tabelas `ensina`
+-- Limitadores para a tabela `ensina`
 --
 ALTER TABLE `ensina`
   ADD CONSTRAINT `FK_Ensina_1` FOREIGN KEY (`fk_Turma_Id_Turma`) REFERENCES `turma` (`Id_Turma`),
   ADD CONSTRAINT `FK_Ensina_2` FOREIGN KEY (`fk_Professores_Id_Prof`) REFERENCES `professores` (`Id_Prof`);
 
 --
--- Restrições para tabelas `turma`
+-- Limitadores para a tabela `turma`
 --
 ALTER TABLE `turma`
   ADD CONSTRAINT `fk_turma_predio` FOREIGN KEY (`id_predio`) REFERENCES `predio` (`id`);
