@@ -39,9 +39,10 @@
         $conn->close();
       }
       ?>
+      <div class="btn-container">
+      <button type="button" class="btn-cinza" onclick="window.location.href='cadastro.html'">Voltar</button>
       <button type="submit">Enviar</button>
-      <a href ="cadastro.html">
-      <img src="img/left-arrow (1).png" alt="Voltar" class="back-button"></a>
+      </div>
     </form>
   </div>
 
