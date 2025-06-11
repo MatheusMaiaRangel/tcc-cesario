@@ -148,7 +148,7 @@ if (!isset($_SESSION['usuario'])) {
               ?>
               <!-- Seleção de matéria -->
               <select class="form-select event-type" aria-label="Default select example" name="event_type" required>
-                <option value="Urgente">Urgente</option>
+                <option value="">Selecione uma matéria</option>
                 <?php foreach ($materias as $mat): ?>
                   <option value="<?= htmlspecialchars($mat['Nome_Materia']) ?>"
                     data-color="<?= htmlspecialchars($mat['cor_materia']) ?>">
