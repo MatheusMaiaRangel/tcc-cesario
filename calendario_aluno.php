@@ -33,6 +33,9 @@ if (!isset($_SESSION['usuario'])) {
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
+            <ul class="navbar-nav me-auto">
+                      <li class="d-flex"><a class="nav-link text-white" href="editar_perfil_aluno.php">Meu perfil</a></li>
+            </ul>
             <form class="d-flex" method="post" action="logout.php">
           <button class="btn-logout" type="submit">Sair</button>
         </form>
