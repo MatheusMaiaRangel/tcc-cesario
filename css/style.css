@@ -6,16 +6,40 @@
   font-family: 'Arial', sans-serif;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
+  display: flex;
   flex-direction: column;
-  margin-top: 5%;
-  margin-left: 7%;
-  margin-right: 7%;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+}
+
+.container-login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Garante que o conteúdo do formulário não cause rolagem */
+.container-login > form {
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Remove espaço extra embaixo */
+.container-login > form {
+  flex: 0 1 auto;
 }
 
 h1 {
@@ -211,6 +235,8 @@ button[type="submit"]:hover,
   align-items: center;
   justify-content: center;
   margin: 20px 0;
+  width: 100%;
+  max-width: 400px;
 }
 
 .linha-ou hr {
