@@ -63,7 +63,7 @@ if (isset($_GET['remover']) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SER
 
 <body>
   <!--navbar-->
-  <nav class="navbar fixed-top navbar-expand-lg background_blue">
+ <nav class="navbar fixed-top navbar-expand-lg background_blue">
     <div class="container-fluid">
       <a class="navbar-brand text-white" href="calendario_admin.php">Oblivion</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -73,7 +73,11 @@ if (isset($_GET['remover']) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SER
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a class="nav-link text-white" href="gerenciar_materias.php">Matérias</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="editar_perfil.php">Meu perfil</a></li>
         </ul>
+        <form class="d-flex" method="post" action="logout.php">
+          <button class="btn-logout" type="submit">Sair</button>
+        </form>
       </div>
     </div>
   </nav>
