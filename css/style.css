@@ -6,40 +6,16 @@
   font-family: 'Arial', sans-serif;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background: #fff;
-}
-
-.container-login {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-/* Garante que o conteúdo do formulário não cause rolagem */
-.container-login > form {
-  flex: 0 1 auto;
-  width: 100%;
-  max-width: 400px;
-}
-
-/* Remove espaço extra embaixo */
-.container-login > form {
-  flex: 0 1 auto;
+  justify-content: center;
+  min-height: 100vh;
+  flex-direction: column;
+  margin-top: 5%;
+  margin-left: 7%;
+  margin-right: 7%;
 }
 
 h1 {
@@ -235,8 +211,6 @@ button[type="submit"]:hover,
   align-items: center;
   justify-content: center;
   margin: 20px 0;
-  width: 100%;
-  max-width: 400px;
 }
 
 .linha-ou hr {
@@ -289,4 +263,63 @@ button[type="submit"]:hover,
 .btn-primary:hover {
   background-color: #0056b3;
   border-color: #004085;
+}
+
+@media (max-width: 600px) {
+  body {
+    display: block !important;
+    align-items: initial !important;
+    justify-content: initial !important;
+    margin: 0 !important;
+    min-height: 100vh;
+  }
+}
+
+
+/***********************
+ * AJUSTE DE NAVBAR FIXA PARA NÃO SOBREPOR CONTEÚDO
+ ***********************/
+.navbar.fixed-top + .container,
+.navbar.fixed-top + .main,
+.navbar.fixed-top + .container-login {
+  margin-top: 70px !important;
+}
+
+@media (max-width: 991px) {
+  .navbar.fixed-top + .container,
+  .navbar.fixed-top + .main,
+  .navbar.fixed-top + .container-login {
+    margin-top: 90px !important;
+  }
+}
+
+/* Ajuste global para containers principais quando houver navbar fixa */
+body .navbar.fixed-top ~ .container-login,
+body .navbar.fixed-top ~ .container,
+body .navbar.fixed-top ~ .main {
+  margin-top: 70px !important;
+}
+
+@media (max-width: 991px) {
+  body .navbar.fixed-top ~ .container-login,
+  body .navbar.fixed-top ~ .container,
+  body .navbar.fixed-top ~ .main {
+    margin-top: 90px !important;
+  }
+}
+
+/* Garante que mesmo se não for irmão direto, o espaçamento será aplicado */
+.container-login,
+.container,
+.main {
+  /* fallback para garantir espaçamento mínimo */
+  margin-top: 70px;
+}
+
+@media (max-width: 991px) {
+  .container-login,
+  .container,
+  .main {
+    margin-top: 90px;
+  }
 }
