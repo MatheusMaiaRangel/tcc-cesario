@@ -38,7 +38,7 @@
 
       <!-- Celular -->
       <label for="celular">Digite seu celular</label>
-      <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" required>
+      <input type="tel" id="celular" name="celular" placeholder="+00 (00) 00000-0000" required>
 
       <!-- Email -->
       <label for="email">Digite seu email</label>
@@ -72,15 +72,21 @@
       e.target.value = value;
     });
 
-    // Máscara de Celular
+    // Máscara de Celular internacional com DDI
     celularInput.addEventListener('input', function (e) {
-      let value = e.target.value.replace(/\D/g, '').substring(0, 11);
-      if (value.length > 6)
-        value = value.replace(/(\d{2})(\d{5})(\d+)/, '($1) $2-$3');
-      else if (value.length > 2)
-        value = value.replace(/(\d{2})(\d+)/, '($1) $2');
-      else
-        value = value.replace(/(\d{0,2})/, '($1');
+      let value = e.target.value;
+      // Garante que começa com +
+      if (!value.startsWith('+')) value = '+' + value.replace(/[^\d]/g, '');
+      else value = '+' + value.substring(1).replace(/\D/g, '');
+      // Limita tamanho total (ex: +55 (11) 99999-9999)
+      value = value.substring(0, 14);
+      // Aplica máscara: +55 (11) 99999-9999
+      if (value.length > 7)
+        value = value.replace(/^(\+\d{2})(\d{2})(\d{5})(\d{0,4})/, '$1 ($2) $3-$4');
+      else if (value.length > 4)
+        value = value.replace(/^(\+\d{2})(\d{2})(\d{0,5})/, '$1 ($2) $3');
+      else if (value.length > 3)
+        value = value.replace(/^(\+\d{2})(\d{0,2})/, '$1 ($2');
       e.target.value = value;
     });
 
