@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/config.php';
 $servername = "localhost";
 $username = "root";
 $password = ""; 
@@ -65,6 +66,32 @@ foreach ($turmas as $turmaId) {
     $stmt->bind_param("ssssssiii", $event_name, $event_time_from, $event_time_to, $event_description, $event_type, $event_day, $event_month, $event_year, $turmaId);
     if ($stmt->execute()) {
         $sucesso++;
+        // Envio automático de WhatsApp para eventos URGENTES
+        if (strtolower($event_type) === 'urgente') {
+            // Buscar todos os alunos da turma
+            $conn2 = new mysqli($servername, $username, $password, $dbname);
+            $sqlAlunos = "SELECT Cel_Aluno FROM alunos WHERE fk_Turma_Id_Turma = ? AND Cel_Aluno IS NOT NULL AND Cel_Aluno != ''";
+            $stmtAlunos = $conn2->prepare($sqlAlunos);
+            $stmtAlunos->bind_param('i', $turmaId);
+            $stmtAlunos->execute();
+            $resAlunos = $stmtAlunos->get_result();
+            while ($rowAluno = $resAlunos->fetch_assoc()) {
+                $telefone = preg_replace('/\D/', '', $rowAluno['Cel_Aluno']);
+                if (strlen($telefone) < 11) continue;
+                $mensagem = "ATENÇÃO: Novo evento urgente cadastrado para sua turma. Acesse o sistema para mais detalhes.
+https://github.com/MatheusMaiaRangel/tcc-cesario";
+                $url = "https://api.callmebot.com/whatsapp.php?phone={$telefone}&text=" . urlencode($mensagem) . "&apikey=" . urlencode($CALLMEBOT_APIKEY);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+                $response = curl_exec($ch);
+                curl_close($ch);
+                // Opcional: salvar log
+            }
+            $stmtAlunos->close();
+            $conn2->close();
+        }
     } else {
         $falha++;
     }
