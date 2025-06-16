@@ -142,6 +142,9 @@ button[type="submit"]:hover,
   width: 90%;
   max-width: 400px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container, .main, .card {
