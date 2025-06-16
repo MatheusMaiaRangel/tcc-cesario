@@ -240,15 +240,14 @@ function updateEvents(date) {
         // Busca a cor da matéria do evento
         let cor = event.cor_materia || '';
         let turmaInfo = event.turma_nome ? ` ${event.turma_nome}` : '';
-        events += `<div class="event">
-            <div class="title ${event.type}">
+        events += `<div class="event" style="margin-bottom: 20px;"  onclick="deletarEvento(${event.id})">
+            <div class="title">
               <i class="fas fa-circle" style="color:${cor}"></i>
-              <h3 class="event-title" style="color:${cor}">${event.type} : ${turmaInfo}</h3><span class="event-time">${event.time}</span>
+              <h3 class="event-title" style="color:${cor}">${event.type}: ${turmaInfo}</h3><span class="event-time">${event.time}</span>
             </div>
             <div class="event-time">
               <p> ${event.title}: ${event.description}</p>
             </div>
-            
         </div>`;
       });
     }
@@ -395,35 +394,27 @@ document.getElementById('add-event-form').addEventListener('submit', async funct
 });
 
 //função para apagar o evento
-eventsContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("event")) {
-    if (confirm("Deletar esse evento?")) {
-      const eventTitle = e.target.children[0].children[1].innerHTML;
-      eventsArr.forEach((event) => {
-        if (
-          event.day === activeDay &&
-          event.month === month + 1 &&
-          event.year === year
-        ) {
-          event.events.forEach((item, index) => {
-            if (item.title === eventTitle) {
-              event.events.splice(index, 1);
-            }
-          });
-          if (event.events.length === 0) {
-            eventsArr.splice(eventsArr.indexOf(event), 1);
-            const activeDayEl = document.querySelector(".day.active");
-            if (activeDayEl.classList.contains("event")) {
-              activeDayEl.classList.remove("event");
-            }
-          }
-        }
-      });
-      updateEvents(activeDay);
-    }
+const btn = document.createElement('button');
+btn.textContent = 'Deletar';
+btn.onclick = () => deletarEvento(evento.id);
+//função para apagar o evento
+async function deletarEvento(id) {
+  if (!confirm('Tem certeza que deseja deletar este evento?')) return;
+  try {
+    const response = await fetch('deletaEvento.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'id=' + encodeURIComponent(id)
+    });
+    const result = await response.text();
+    alert(result);
+    getEvents(); // Atualiza a lista de eventos
+  } catch (error) {
+    alert('Erro ao deletar evento.');
   }
-});
+}
 
+//recebe as variaveis do getEventos.php
 async function getEvents() {
   try {
     const response = await fetch('getEventos.php');
@@ -432,13 +423,14 @@ async function getEvents() {
     eventsArr.length = 0; // Limpa antes de popular (importante)
 
     data.forEach(evento => {
-      let exist = eventsArr.find(ev => 
+      let exist = eventsArr.find(ev =>
         ev.day === parseInt(evento.dia) &&
         ev.month === parseInt(evento.mes) &&
         ev.year === parseInt(evento.ano)
       );
 
       const newEvent = {
+        id: evento.id,
         title: evento.nome,
         time: evento.time_from + " - " + evento.time_to,
         type: evento.tipo,
@@ -466,7 +458,6 @@ async function getEvents() {
     console.error('Erro ao buscar eventos:', error);
   }
 }
-
 //fução de horario
 function convertTime(time) {
   let timeArr = time.split(":");
