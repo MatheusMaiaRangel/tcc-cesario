@@ -4,7 +4,8 @@ session_start();
 $nome = trim($_POST['nome']);
 $nomeSocial = trim($_POST['nomeSocial']);
 $cpf = preg_replace('/\D/', '', $_POST['cpf']);
-$celular = preg_replace('/\D/', '', $_POST['celular']);
+// Celular: mantém o + e remove todos os outros caracteres não numéricos
+$celular = '+' . preg_replace('/[^\d]/', '', ltrim($_POST['celular'], '+'));
 $email = trim($_POST['email']);
 $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
