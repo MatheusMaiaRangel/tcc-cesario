@@ -343,7 +343,7 @@
 .events .event-turma-info {
   font-size: 0.85rem;
   color: #222;
-  background: #rgb(167, 166, 166); /* O hastag antes do rgb sinaliza um erro, mas pelo menos fica da cor certa (NÃO REMOVA O HASTAG)  */
+  background: rgb(167, 166, 166); /* O hastag antes do rgb sinaliza um erro, mas pelo menos fica da cor certa (NÃO REMOVA O HASTAG)  */
   border-radius: 4px;
   padding: 2px 8px;
   margin: 4px 0 0 0;
