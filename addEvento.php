@@ -2,7 +2,7 @@
 require_once __DIR__ . '/config.php';
 $servername = "localhost";
 $username = "root";
-$password = ""; 
+$password = "";
 $dbname = "tccteste";
 
 // Cria a conexão
@@ -49,7 +49,8 @@ $sucesso = 0;
 $falha = 0;
 foreach ($turmas as $turmaId) {
     $turmaId = intval($turmaId);
-    if ($turmaId <= 0) continue;
+    if ($turmaId <= 0)
+        continue;
     // Verifica se um evento exatamente igual já existe
     $checkStmt = $conn->prepare("SELECT id FROM evento WHERE nome = ? AND time_from = ? AND time_to = ? AND descricao = ? AND tipo = ? AND dia = ? AND mes = ? AND ano = ? AND fk_Turma_Id_Turma = ?");
     $checkStmt->bind_param("ssssssiii", $event_name, $event_time_from, $event_time_to, $event_description, $event_type, $event_day, $event_month, $event_year, $turmaId);
@@ -70,16 +71,18 @@ foreach ($turmas as $turmaId) {
         if (strtolower($event_type) === 'urgente') {
             // Buscar todos os alunos da turma
             $conn2 = new mysqli($servername, $username, $password, $dbname);
-            $sqlAlunos = "SELECT Cel_Aluno FROM alunos WHERE fk_Turma_Id_Turma = ? AND Cel_Aluno IS NOT NULL AND Cel_Aluno != ''";
+            $sqlAlunos = "SELECT Nome_Aluno, NomeSocial_Aluno, Cel_Aluno FROM alunos WHERE fk_Turma_Id_Turma = ? AND Cel_Aluno IS NOT NULL AND Cel_Aluno != ''";
             $stmtAlunos = $conn2->prepare($sqlAlunos);
             $stmtAlunos->bind_param('i', $turmaId);
             $stmtAlunos->execute();
             $resAlunos = $stmtAlunos->get_result();
             while ($rowAluno = $resAlunos->fetch_assoc()) {
                 $telefone = preg_replace('/\D/', '', $rowAluno['Cel_Aluno']);
-                if (strlen($telefone) < 11) continue;
-                $mensagem = "ATENÇÃO: Novo evento urgente cadastrado para sua turma. Acesse o sistema para mais detalhes.
-https://github.com/MatheusMaiaRangel/tcc-cesario";
+                if (strlen($telefone) < 11)
+                    continue;
+
+                $nome = isset($rowAluno['NomeSocial_Aluno']) && trim($rowAluno['NomeSocial_Aluno']) !== '' ? trim($rowAluno['NomeSocial_Aluno']) : $rowAluno['Nome_Aluno'];
+                $mensagem = "Atenção, $nome: Novo evento urgente cadastrado para sua turma. Acesse o sistema para mais detalhes.\nhttps://github.com/MatheusMaiaRangel/tcc-cesario";
                 $url = "https://api.callmebot.com/whatsapp.php?phone={$telefone}&text=" . urlencode($mensagem) . "&apikey=" . urlencode($CALLMEBOT_APIKEY);
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url);
@@ -106,5 +109,3 @@ if ($sucesso > 0 && $falha === 0) {
     echo json_encode(["status" => "error", "message" => "Nenhum evento salvo. Todos já existiam ou falharam."]);
 }
 ?>
-
-
