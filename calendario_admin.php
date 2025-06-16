@@ -31,7 +31,6 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 
 <body class="main">
-
   <!--navbar-->
   <nav class="navbar fixed-top navbar-expand-lg background_blue">
     <div class="container-fluid">
