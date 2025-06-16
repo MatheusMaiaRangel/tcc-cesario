@@ -26,7 +26,7 @@ let activeDay;
 let month = today.getMonth();
 let year = today.getFullYear();
 
-//cria uma lista constante dos meses
+//meses do ano
 const months = [
   "Janeiro",
   "Fevereiro",
@@ -42,37 +42,14 @@ const months = [
   "Dezembro",
 ];
 
-// const eventsArr = [
-//   {
-//     day: 13,
-//     month: 11,
-//     year: 2022,
-//     events: [
-//       {
-//         title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-//         time: "10:00 AM",
-//       },
-//       {
-//         title: "Event 2",
-//         time: "11:00 AM",
-//       },
-//     ],
-//   },
-// ];
-
-//cria uma constante vazia para armazenar dados de getEvents
 const eventsArr = [];
-
-//executa a funçao getEvents
-getEvents();
-//exibe no console.log os valores dentro de eventsArr
-console.log(eventsArr);
-
-prev.addEventListener("click", prevMonth);
-next.addEventListener("click", nextMonth);
-
-//executa a funçao initCalendar
-initCalendar();
+getEvents().then(() => {
+  initCalendar(); // Inicializa o calendário após carregar os eventos
+  const todayDate = today.getDate();
+  activeDay = todayDate;
+  getActiveDay(todayDate);
+  updateEvents(todayDate); // Atualiza os eventos após carregar os dados
+});
 
 //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
 function initCalendar() {
@@ -143,7 +120,6 @@ function prevMonth() {
   initCalendar();
 }
 
-//não interpretei ainda
 function nextMonth() {
   month++;
   if (month > 11) {
@@ -153,8 +129,8 @@ function nextMonth() {
   initCalendar();
 }
 
-
-
+prev.addEventListener("click", prevMonth);
+next.addEventListener("click", nextMonth);
 
 //function to add active on day
 function addListner() {
@@ -231,7 +207,6 @@ gotoBtn.addEventListener("click", gotoDate);
 
 //função para ir até o dia
 function gotoDate() {
-  console.log("here");
   const dateArr = dateInput.value.split("/");
   if (dateArr.length === 2) {
     if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
@@ -261,15 +236,17 @@ function updateEvents(date) {
       month + 1 === event.month &&
       year === event.year
     ) {
-      //colocar de novo o event type
       event.events.forEach((event) => {
-        events += `<div class="event">
-            <div class="title ${event.type}">
-              <i class="fas fa-circle"></i>
-              <h3 class="event-title">${event.type}: ${event.title}</h3><span class="event-time">${event.time}</span>
+        // Busca a cor da matéria do evento
+        let cor = event.cor_materia || '';
+        let turmaInfo = event.turma_nome ? ` ${event.turma_nome}` : '';
+        events += `<div class="event" style="margin-bottom: 20px;">
+            <div class="title">
+              <i class="fas fa-circle" style="color:${cor}"></i>
+              <h3 class="event-title" style="color:${cor}">${event.type}: ${turmaInfo}</h3><span class="event-time">${event.time}</span>
             </div>
             <div class="event-time">
-              <p>${event.description}</p>
+              <p> ${event.title}: ${event.description}</p>
             </div>
         </div>`;
       });
@@ -281,25 +258,9 @@ function updateEvents(date) {
         </div>`;
   }
   eventsContainer.innerHTML = events;
-  saveEvents();
 }
 
-//function to add event
-addEventBtn.addEventListener("click", () => {
-  addEventWrapper.classList.toggle("active");
-});
-
-addEventCloseBtn.addEventListener("click", () => {
-  addEventWrapper.classList.remove("active");
-});
-
-document.addEventListener("click", (e) => {
-  if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
-    addEventWrapper.classList.remove("active");
-  }
-});
-
-//allow 50 chars in eventtitle
+//allow 60 chars in eventtitle
 addEventTitle.addEventListener("input", (e) => {
   addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
@@ -325,19 +286,74 @@ addEventTo.addEventListener("input", (e) => {
   }
 });
 
-//function to add event to eventsArr
-addEventSubmit.addEventListener("click", () => {
-  const eventTitle = addEventTitle.value;
-  const eventTimeFrom = addEventFrom.value;
-  const eventTimeTo = addEventTo.value;
-  const eventType = addEventType.value;
-  const eventDesc = addEventDescription.value;
+// =======================
+// ENVIO DE EVENTO (APENAS UM BLOCO!)
+// =======================
+document.getElementById('add-event-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  document.getElementById("event-day-input").value = activeDay;
+  document.getElementById("event-month-input").value = month + 1;
+  document.getElementById("event-year-input").value = year;
 
-  if (!eventTitle || !eventTimeFrom || !eventTimeTo || !eventType || !eventDesc) {
-    alert("Preencha todos os campos.");
+  const eventTitle = addEventTitle.value.trim();
+  const eventTimeFrom = addEventFrom.value.trim();
+  const eventTimeTo = addEventTo.value.trim();
+  const eventType = addEventType.value.trim();
+  const eventDesc = addEventDescription.value.trim();
+  const eventTurma = document.querySelector('.event-turma').value;
+  const eventPredio = document.querySelector('.event-predio').value;
+
+  if (!eventTitle || !eventTimeFrom || !eventTimeTo || !eventType || !eventDesc || !eventTurma) {
+    alert("Preencha todos os campos obrigatórios.");
     return;
   }
 
+  // Se for para todas as turmas do prédio
+  if (eventTurma === 'ALL_BY_BUILDING' && eventPredio) {
+    // Pega todas as turmas do prédio selecionado
+    const turmasDoPredio = turmasCache.filter(opt => opt.getAttribute('data-predio') === eventPredio);
+    let sucesso = 0, falha = 0;
+    for (const turmaOpt of turmasDoPredio) {
+      const turmaId = turmaOpt.value;
+      const newEvent = {
+        event_nome: eventTitle,
+        event_time_from: eventTimeFrom,
+        event_time_to: eventTimeTo,
+        event_description: eventDesc,
+        event_type: eventType,
+        event_day: activeDay,
+        event_month: month + 1,
+        event_year: year,
+        event_turma: turmaId
+      };
+      try {
+        const resp = await fetch("addEvento.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newEvent)
+        });
+        const data = await resp.json();
+        if (data.status === "success") sucesso++;
+        else falha++;
+      } catch {
+        falha++;
+      }
+    }
+    alert(`Eventos enviados: ${sucesso}, falhas: ${falha}`);
+    if (sucesso) {
+      getEvents();
+      addEventTitle.value = "";
+      addEventFrom.value = "";
+      addEventTo.value = "";
+      addEventType.value = "";
+      addEventDescription.value = "";
+      turmaSelect.value = "";
+      predioSelect.value = "";
+    }
+    return;
+  }
+
+  // Caso padrão (apenas uma turma)
   const newEvent = {
     event_nome: eventTitle,
     event_time_from: eventTimeFrom,
@@ -347,9 +363,9 @@ addEventSubmit.addEventListener("click", () => {
     event_day: activeDay,
     event_month: month + 1,
     event_year: year,
+    event_turma: eventTurma
   };
 
-  // Enviar para o servidor
   fetch("addEvento.php", {
     method: "POST",
     headers: {
@@ -357,93 +373,72 @@ addEventSubmit.addEventListener("click", () => {
     },
     body: JSON.stringify(newEvent),
   })
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((data) => {
-      console.log("Resposta do servidor:", data);
-      if (data.includes("sucesso")) {
-        alert("Evento salvo com sucesso!");
-        updateEvents(activeDay); // Atualiza os eventos no frontend
-      } else {
-        alert(data); // Exibe o erro retornado pelo servidor
+      alert(data.message);
+      if (data.status === "success") {
+        getEvents(); // Recarrega os eventos após salvar
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        addEventType.value = "";
+        addEventDescription.value = "";
+        turmaSelect.value = "";
+        predioSelect.value = "";
       }
     })
     .catch((error) => {
-      console.error("Erro ao salvar evento:", error);
       alert("Erro ao salvar evento.");
+      console.error(error);
     });
 });
 
-//função para apagar o evento
-eventsContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("event")) {
-    if (confirm("Deletar esse evento?")) {
-      const eventTitle = e.target.children[0].children[1].innerHTML;
-      eventsArr.forEach((event) => {
-        if (
-          event.day === activeDay &&
-          event.month === month + 1 &&
-          event.year === year
-        ) {
-          //console.log index
-          event.events.forEach((item, index) => {
-            console.log("title>>"+item.title);
-              console.log("eventtitle>>"+item.eventTitle);
-            if (item.title === eventTitle) {
-              
-              event.events.splice(index, 1);
-            }
-          });
-          //if no events left in a day then remove that day from eventsArr
-          if (event.events.length === 0) {
-            eventsArr.splice(eventsArr.indexOf(event), 1);
-            //remove event class from day
-            const activeDayEl = document.querySelector(".day.active");
-            if (activeDayEl.classList.contains("event")) {
-              activeDayEl.classList.remove("event");
-            }
-          }
-        }
-      });
-      updateEvents(activeDay);
-    }
+//recebe as variaveis do getEventos.php
+async function getEvents() {
+  try {
+    const response = await fetch('getEventos.php');
+    const data = await response.json();
+
+    eventsArr.length = 0; // Limpa antes de popular (importante)
+
+    data.forEach(evento => {
+      let exist = eventsArr.find(ev =>
+        ev.day === parseInt(evento.dia) &&
+        ev.month === parseInt(evento.mes) &&
+        ev.year === parseInt(evento.ano)
+      );
+
+      const newEvent = {
+        id: evento.id,
+        title: evento.nome,
+        time: evento.time_from + " - " + evento.time_to,
+        type: evento.tipo,
+        description: evento.descricao,
+        cor_materia: evento.cor_materia || '',
+        turma_nome: evento.Nome_Turma || '',
+        turma_id: evento.fk_Turma_Id_Turma || ''
+      };
+
+      if (exist) {
+        exist.events.push(newEvent);
+      } else {
+        eventsArr.push({
+          day: parseInt(evento.dia),
+          month: parseInt(evento.mes),
+          year: parseInt(evento.ano),
+          events: [newEvent]
+        });
+      }
+    });
+
+    initCalendar();
+
+  } catch (error) {
+    console.error('Erro ao buscar eventos:', error);
   }
-});
-
-//função para usar o json para salvar os eventos
-function saveEvents() {
-  // Enviar os eventos para o servidor
-  fetch('/api/save-events', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(eventsArr), // Envia os eventos como JSON
-  })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('Eventos salvos no servidor:', data);
-  })
-  .catch((error) => {
-    console.error('Erro ao salvar eventos:', error);
-  });
 }
-
-function saveEvents() {
-  localStorage.setItem("events", JSON.stringify(eventsArr));
-}
-
-//function to get events from local storage
-function getEvents() {
-  //check if events are already saved in local storage then return event else nothing
-  if (localStorage.getItem("events") === null) {
-    return;
-  }
-  eventsArr.push(...JSON.parse(localStorage.getItem("events")));
-}
-
 //fução de horario
 function convertTime(time) {
-  //convert time to 24 hour format
   let timeArr = time.split(":");
   let timeHour = timeArr[0];
   let timeMin = timeArr[1];
@@ -451,4 +446,41 @@ function convertTime(time) {
   timeHour = timeHour % 12 || 12;
   time = timeHour + ":" + timeMin + " " + timeFormat;
   return time;
+}
+
+// --- FILTRO DE TURMAS POR PRÉDIO E ENVIO PARA TODAS AS TURMAS DO PRÉDIO ---
+const turmaSelect = document.querySelector('.event-turma');
+const predioSelect = document.querySelector('.event-predio');
+// O cache deve ser feito logo no carregamento, com todas as opções originais
+let turmasCache = [];
+if (turmaSelect) {
+  turmasCache = Array.from(document.querySelectorAll('.event-turma option'))
+    .filter(opt => opt.value && opt.value !== 'ALL_BY_BUILDING' && opt.getAttribute('data-predio'));
+}
+
+if (predioSelect && turmaSelect) {
+  predioSelect.addEventListener('change', function() {
+    const predioSelecionado = this.value;
+    turmaSelect.innerHTML = '<option value="">Selecione a turma</option>';
+    // Salva o valor atual da matéria
+    const eventTypeSelect = document.querySelector('.event-type');
+    const selectedEventType = eventTypeSelect ? eventTypeSelect.value : null;
+    // Adiciona a opção de todas as turmas do prédio SEMPRE que um prédio for selecionado
+    if (predioSelecionado) {
+      const optAll = document.createElement("option");
+      optAll.value = "ALL_BY_BUILDING";
+      optAll.textContent = "Todas as turmas do prédio selecionado";
+      optAll.style.fontWeight = 'bold';
+      turmaSelect.appendChild(optAll);
+    }
+    turmasCache.forEach(opt => {
+      if (!predioSelecionado || opt.getAttribute('data-predio') === predioSelecionado) {
+        turmaSelect.appendChild(opt.cloneNode(true));
+      }
+    });
+    // Restaura o valor da matéria
+    if (eventTypeSelect && selectedEventType) {
+      eventTypeSelect.value = selectedEventType;
+    }
+  });
 }
