@@ -16,7 +16,8 @@ $id = $_SESSION['id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim($_POST['nome']);
     $nomeSocial = trim($_POST['nomeSocial']);
-    $celular = preg_replace('/\D/', '', $_POST['celular']);
+    // Mantém o "+" e remove todos os outros caracteres não numéricos
+    $celular = '+' . preg_replace('/[^\d]/', '', ltrim($_POST['celular'], '+'));
     $email = trim($_POST['email']);
     $turma = isset($_POST['turma']) ? intval($_POST['turma']) : null;
     if ($tipo === 'aluno') {
@@ -133,6 +134,27 @@ $conn->close();
             </div>
         </form>
     </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const celularInput = document.getElementById('celular');
+    if (celularInput) {
+        celularInput.addEventListener('input', function (e) {
+            let value = e.target.value;
+            // Garante que começa com +
+            if (!value.startsWith('+')) value = '+' + value.replace(/[^\d]/g, '');
+            else value = '+' + value.substring(1).replace(/\D/g, '');
+            value = value.substring(0, 13);
+            if (value.length > 7)
+                value = value.replace(/^(\+\d{2})(\d{2})(\d{5})(\d{0,4})/, '$1 ($2) $3-$4');
+            else if (value.length > 4)
+                value = value.replace(/^(\+\d{2})(\d{2})(\d{0,5})/, '$1 ($2) $3');
+            else if (value.length > 3)
+                value = value.replace(/^(\+\d{2})(\d{0,2})/, '$1 ($2');
+            e.target.value = value;
+        });
+    }
+});
+</script>
 </body>
 
 </html>
