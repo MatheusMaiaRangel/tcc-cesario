@@ -113,7 +113,7 @@ $conn->close();
     <div class="container-login">
         <img src="img/Vector.png" alt="Logo" class="logo" />
         <h1>Editar Perfil</h1>
-        <?php if (isset($msg)): ?>
+        <?php if (isset($msg) && $_SERVER['REQUEST_METHOD'] === 'POST'): ?>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
