@@ -43,10 +43,12 @@ if (isset($_GET['negar'])) {
 $res = $conn->query("
     SELECT a.id, a.tipo, a.id_usuario, a.status,
         p.Nome_Prof, p.NomeSocial_Prof, p.Cpf_Prof, p.Cel_Prof, p.Email_Prof,
-        c.Nome_Coord, c.NomeSocial_Coord, c.Cpf_Coord, c.Cel_Coord, c.Email_Coord
+        c.Nome_Coord, c.NomeSocial_Coord, c.Cpf_Coord, c.Cel_Coord, c.Email_Coord,
+        d.Nome_Diretor, d.NomeSocial_Diretor, d.Cpf_Diretor, d.Cel_Diretor, d.Email_Diretor
     FROM solicitacoes a
     LEFT JOIN professores p ON a.tipo='professor' AND a.id_usuario=p.Id_Prof
     LEFT JOIN coordenadores c ON a.tipo='coordenador' AND a.id_usuario=c.Id_Coord
+    LEFT JOIN diretores d ON a.tipo='diretor' AND a.id_usuario=d.Id_Diretor
     WHERE a.status='pendente'
 ");
 ?>
@@ -101,11 +103,11 @@ $res = $conn->query("
             <?php while ($row = $res->fetch_assoc()): ?>
               <tr>
                 <td class="text-center"><?= htmlspecialchars($row['tipo']) ?></td>
-                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Nome_Prof']) : htmlspecialchars($row['Nome_Coord']) ?></td>
-                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['NomeSocial_Prof']) : htmlspecialchars($row['NomeSocial_Coord']) ?></td>
-                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Cpf_Prof']) : htmlspecialchars($row['Cpf_Coord']) ?></td>
-                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Cel_Prof']) : htmlspecialchars($row['Cel_Coord']) ?></td>
-                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Email_Prof']) : htmlspecialchars($row['Email_Coord']) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Nome_Prof']) : ($row['tipo'] == 'coordenador' ? htmlspecialchars($row['Nome_Coord']) : htmlspecialchars($row['Nome_Diretor'])) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['NomeSocial_Prof']) : ($row['tipo'] == 'coordenador' ? htmlspecialchars($row['NomeSocial_Coord']) : htmlspecialchars($row['NomeSocial_Diretor'])) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Cpf_Prof']) : ($row['tipo'] == 'coordenador' ? htmlspecialchars($row['Cpf_Coord']) : htmlspecialchars($row['Cpf_Diretor'])) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Cel_Prof']) : ($row['tipo'] == 'coordenador' ? htmlspecialchars($row['Cel_Coord']) : htmlspecialchars($row['Cel_Diretor'])) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Email_Prof']) : ($row['tipo'] == 'coordenador' ? htmlspecialchars($row['Email_Coord']) : htmlspecialchars($row['Email_Diretor'])) ?></td>
                 <td class="text-center">
                   <a href="?aprovar=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Aprovar</a>
                   <a href="?negar=<?= $row['id'] ?>" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Negar</a>
