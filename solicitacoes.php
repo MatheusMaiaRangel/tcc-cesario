@@ -14,8 +14,10 @@ if (isset($_GET['aprovar'])) {
     if ($row = $res->fetch_assoc()) {
         if ($row['tipo'] === 'professor') {
             $conn->query("UPDATE professores SET aprovado=1 WHERE Id_Prof={$row['id_usuario']}");
-        } else {
+        } elseif ($row['tipo'] === 'coordenador') {
             $conn->query("UPDATE coordenadores SET aprovado=1 WHERE Id_Coord={$row['id_usuario']}");
+        } elseif ($row['tipo'] === 'diretor') {
+            $conn->query("UPDATE diretores SET aprovado=1 WHERE Id_Diretor={$row['id_usuario']}");
         }
         $conn->query("UPDATE solicitacoes SET status='aprovado' WHERE id=$id");
     }
