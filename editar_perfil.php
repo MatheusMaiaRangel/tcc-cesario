@@ -80,6 +80,14 @@ if ($tipo === 'aluno') {
     $stmt->fetch();
     $stmt->close();
     $turmaAtual = null;
+} elseif ($tipo === 'diretor') {
+    $stmt = $conn->prepare('SELECT Nome_Diretor, NomeSocial_Diretor, Cel_Diretor, Email_Diretor FROM diretores WHERE Id_Diretor=?');
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->bind_result($nome, $nomeSocial, $celular, $email);
+    $stmt->fetch();
+    $stmt->close();
+    $turmaAtual = null;
 }
 
 // Busca turmas (só mostra select se for aluno)
