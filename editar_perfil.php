@@ -46,6 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg = 'Erro ao atualizar dados.';
         }
     }
+} elseif ($tipo === 'diretor') {
+    $stmt = $conn->prepare('UPDATE diretores SET Nome_Diretor=?, NomeSocial_Diretor=?, Cel_Diretor=?, Email_Diretor=? WHERE Id_Diretor=?');
+    $stmt->bind_param('ssssi', $nome, $nomeSocial, $celular, $email, $id);
+    if ($stmt->execute()) {
+        $msg = 'Dados atualizados com sucesso!';
+    } else {
+        $msg = 'Erro ao atualizar dados.';
+    }
 }
 
 // Busca dados atuais do usuário
@@ -100,7 +108,7 @@ $conn->close();
         <?php if (isset($msg)): ?>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
                         icon: '<?= strpos($msg, "sucesso") !== false ? "success" : "error" ?>',
                         title: '<?= strpos($msg, "sucesso") !== false ? "Sucesso!" : "Erro!" ?>',
@@ -124,7 +132,8 @@ $conn->close();
                 <select id="turma" name="turma" required>
                     <?php foreach ($turmas as $t): ?>
                         <option value="<?= $t['Id_Turma'] ?>" <?= $t['Id_Turma'] == $turmaAtual ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($t['Nome_Turma']) ?></option>
+                            <?= htmlspecialchars($t['Nome_Turma']) ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             <?php endif; ?>
@@ -135,26 +144,26 @@ $conn->close();
         </form>
     </div>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const celularInput = document.getElementById('celular');
-    if (celularInput) {
-        celularInput.addEventListener('input', function (e) {
-            let value = e.target.value;
-            // Garante que começa com +
-            if (!value.startsWith('+')) value = '+' + value.replace(/[^\d]/g, '');
-            else value = '+' + value.substring(1).replace(/\D/g, '');
-            value = value.substring(0, 13);
-            if (value.length > 7)
-                value = value.replace(/^(\+\d{2})(\d{2})(\d{5})(\d{0,4})/, '$1 ($2) $3-$4');
-            else if (value.length > 4)
-                value = value.replace(/^(\+\d{2})(\d{2})(\d{0,5})/, '$1 ($2) $3');
-            else if (value.length > 3)
-                value = value.replace(/^(\+\d{2})(\d{0,2})/, '$1 ($2');
-            e.target.value = value;
+        document.addEventListener('DOMContentLoaded', function () {
+            const celularInput = document.getElementById('celular');
+            if (celularInput) {
+                celularInput.addEventListener('input', function (e) {
+                    let value = e.target.value;
+                    // Garante que começa com +
+                    if (!value.startsWith('+')) value = '+' + value.replace(/[^\d]/g, '');
+                    else value = '+' + value.substring(1).replace(/\D/g, '');
+                    value = value.substring(0, 13);
+                    if (value.length > 7)
+                        value = value.replace(/^(\+\d{2})(\d{2})(\d{5})(\d{0,4})/, '$1 ($2) $3-$4');
+                    else if (value.length > 4)
+                        value = value.replace(/^(\+\d{2})(\d{2})(\d{0,5})/, '$1 ($2) $3');
+                    else if (value.length > 3)
+                        value = value.replace(/^(\+\d{2})(\d{0,2})/, '$1 ($2');
+                    e.target.value = value;
+                });
+            }
         });
-    }
-});
-</script>
+    </script>
 </body>
 
 </html>
