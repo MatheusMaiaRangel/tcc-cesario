@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['usuario']) || $_SESSION['tipo'] !== 'coordenador') {
+if (!isset($_SESSION['usuario']) || !in_array($_SESSION['tipo'], ['coordenador', 'diretor'])) {
   header("Location: login.html");
   exit();
 }
