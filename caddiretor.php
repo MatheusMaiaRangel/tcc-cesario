@@ -10,8 +10,7 @@ if ($conn->connect_error) die("Conexão falhou: " . $conn->connect_error);
 // Recebe e trata os dados
 $nome = trim($_POST['nome']);
 $nomeSocial = trim($_POST['nomeSocial']);
-$cpf = preg_replace('/\D/', '', $_POST['cpf']); // remove máscara
-// Celular: mantém o + e remove todos os outros caracteres não numéricos
+$cpf = preg_replace('/\D/', '', $_POST['cpf']);
 $celular = '+' . preg_replace('/[^\d]/', '', ltrim($_POST['celular'], '+'));
 $email = trim($_POST['email']);
 $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
@@ -35,35 +34,27 @@ if (empty($nome) || empty($cpf) || empty($celular) || empty($email) || empty($_P
 
 // Verifica se o CPF já existe em qualquer tabela
 $cpfExistente = false;
-
-// Verifica em alunos
-$verificaAluno = $conn->prepare("SELECT 1 FROM alunos WHERE Cpf_Aluno = ?");
-$verificaAluno->bind_param("s", $cpf);
-$verificaAluno->execute();
-$verificaAluno->store_result();
-if ($verificaAluno->num_rows > 0) $cpfExistente = true;
-
-// Verifica em professores
-$verificaProf = $conn->prepare("SELECT 1 FROM professores WHERE Cpf_Prof = ?");
-$verificaProf->bind_param("s", $cpf);
-$verificaProf->execute();
-$verificaProf->store_result();
-if ($verificaProf->num_rows > 0) $cpfExistente = true;
-
-// Verifica em coordenadores
-$verificaCoord = $conn->prepare("SELECT 1 FROM coordenadores WHERE Cpf_Coord = ?");
-$verificaCoord->bind_param("s", $cpf);
-$verificaCoord->execute();
-$verificaCoord->store_result();
-if ($verificaCoord->num_rows > 0) $cpfExistente = true;
-
+$tabelas = [
+    ['alunos', 'Cpf_Aluno'],
+    ['professores', 'Cpf_Prof'],
+    ['coordenadores', 'Cpf_Coord'],
+    ['diretores', 'Cpf_Diretor']
+];
+foreach ($tabelas as [$tabela, $coluna]) {
+    $stmt = $conn->prepare("SELECT 1 FROM $tabela WHERE $coluna = ?");
+    $stmt->bind_param("s", $cpf);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) $cpfExistente = true;
+    $stmt->close();
+}
 if ($cpfExistente) {
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
     echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 title: 'Erro!',
-                text: 'CPF já cadastrado para outro usuário!',
+                text: 'CPF já cadastrado.',
                 icon: 'error'
             }).then(function() {
                 window.history.back();
@@ -73,40 +64,46 @@ if ($cpfExistente) {
     exit();
 }
 
-// Insere no banco
-$stmt = $conn->prepare("INSERT INTO professores (Nome_Prof, NomeSocial_Prof, Cpf_Prof, Cel_Prof, Email_Prof, Senha_Prof, aprovado) VALUES (?, ?, ?, ?, ?, ?, 0)");
+// Insere o diretor com aprovado=0
+$stmt = $conn->prepare("INSERT INTO diretores (Nome_Diretor, NomeSocial_Diretor, Cpf_Diretor, Cel_Diretor, Email_Diretor, Senha_Diretor, aprovado) VALUES (?, ?, ?, ?, ?, ?, 0)");
 $stmt->bind_param("ssssss", $nome, $nomeSocial, $cpf, $celular, $email, $senha);
 
 if ($stmt->execute()) {
-    $id_prof = $conn->insert_id;
+    $id_diretor = $conn->insert_id;
     // Cria solicitação de aprovação
-    $conn->query("INSERT INTO solicitacoes (tipo, id_usuario) VALUES ('professor', $id_prof)");
+    $solicitacao = $conn->prepare("INSERT INTO solicitacoes (tipo, id_usuario) VALUES ('diretor', ?)");
+    $solicitacao->bind_param("i", $id_diretor);
+    $solicitacao->execute();
+    $solicitacao->close();
+
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
     echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 title: 'Aguardando aprovação!',
-                text: 'Seu cadastro será analisado pelo diretor.',
+                text: 'Seu cadastro será analisado por um diretor.',
                 icon: 'info'
             }).then(function() {
-                window.location.href = 'index.html';
+                window.location.href = 'login.html';
             });
         });
     </script>";
     exit();
 } else {
-    echo "<script>alert('Erro ao cadastrar professor: " . $stmt->error . "'); window.history.back();</script>";
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Erro ao cadastrar diretor: " . addslashes($stmt->error) . "',
+                icon: 'error'
+            }).then(function() {
+                window.history.back();
+            });
+        });
+    </script>";
+    exit();
 }
-
-// Debug 
-//var_dump([
-  //  'nome' => $nome,
-    //'nomeSocial' => $nomeSocial,
-    //'cpf' => $cpf,
-    //'celular' => $celular,
-    //'email' => $email,
-    //'senha_hash' => $senha
-//]);
-
+$stmt->close();
 $conn->close();
 ?>
