@@ -21,6 +21,7 @@
         <option value="aluno">Aluno</option>
         <option value="professor">Professor</option>
         <option value="coordenador">Coordenador</option>
+        <option value="diretor">Diretor</option>
       </select>
 
       <!-- Nome -->
@@ -109,6 +110,9 @@
         form.action = 'cadprof.php';
       } else if (tipo === 'coordenador') {
         form.action = 'cadcoord.php';
+      }
+      else if (tipo === 'diretor') {
+        form.action = 'caddiretor.php';
       }
     });
   </script>
