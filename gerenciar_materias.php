@@ -74,6 +74,7 @@ if (isset($_GET['remover']) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SER
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a class="nav-link text-white" href="gerenciar_materias.php">Matérias</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="editar_perfil.php">Meu perfil</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="solicitacoes.php">Solicitações</a></li>
         </ul>
         <form class="d-flex" method="post" action="logout.php">
           <button class="btn-logout" type="submit">Sair</button>
