@@ -74,22 +74,26 @@ if ($cpfExistente) {
 }
 
 // Insere no banco
-$stmt = $conn->prepare("INSERT INTO coordenadores (Nome_Coord, NomeSocial_Coord, Cpf_Coord, Cel_Coord, Email_Coord, Senha_Coord) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO coordenadores (Nome_Coord, NomeSocial_Coord, Cpf_Coord, Cel_Coord, Email_Coord, Senha_Coord, aprovado) VALUES (?, ?, ?, ?, ?, ?, 0)");
 $stmt->bind_param("ssssss", $nome, $nomeSocial, $cpf, $celular, $email, $senha);
 
 if ($stmt->execute()) {
+    $id_coord = $conn->insert_id;
+    // Cria solicitação de aprovação
+    $conn->query("INSERT INTO solicitacoes (tipo, id_usuario) VALUES ('coordenador', $id_coord)");
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
     echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
-                title: 'Sucesso!',
-                text: 'Coordenador cadastrado com sucesso!',
-                icon: 'success'
+                title: 'Aguardando aprovação!',
+                text: 'Seu cadastro será analisado pelo diretor.',
+                icon: 'info'
             }).then(function() {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             });
         });
     </script>";
+    exit();
 }
 
 // So pra ter certeza
