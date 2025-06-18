@@ -9,21 +9,19 @@ $conn = new mysqli("localhost", "root", "", "tccteste");
 if ($conn->connect_error)
   die("Conexão falhou: " . $conn->connect_error);
 
-$coordenador_id = $_SESSION['id'];
-
-// Busca apenas matérias do coordenador logado
-$materias = $conn->query("SELECT * FROM materias WHERE fk_Coordenadores_Id_Coord = $coordenador_id");
+// Busca todas as matérias (diretor e coordenador veem tudo)
+$materias = $conn->query("SELECT * FROM materias");
 
 // Adicionar matéria
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_materia'])) {
   $nome = trim($_POST['nome_materia']);
   $cor = isset($_POST['cor_materia']) ? $_POST['cor_materia'] : '#FFFFFF';
   if ($nome) {
-    $stmt = $conn->prepare("INSERT INTO materias (Nome_Materia, fk_Coordenadores_Id_Coord, cor_materia) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO materias (Nome_Materia, cor_materia) VALUES (?, ?)");
     if (!$stmt) {
       die("Erro ao preparar statement: " . $conn->error);
     }
-    $stmt->bind_param("sis", $nome, $coordenador_id, $cor);
+    $stmt->bind_param("ss", $nome, $cor);
     if (!$stmt->execute()) {
       die("Erro ao inserir matéria: " . $stmt->error);
     }
@@ -35,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_materia'])) {
 // Remover matéria
 if (isset($_GET['remover']) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
   $id = intval($_GET['remover']);
-  $result = $conn->query("DELETE FROM materias WHERE Id_Materia = $id AND fk_Coordenadores_Id_Coord = $coordenador_id");
+  $result = $conn->query("DELETE FROM materias WHERE Id_Materia = $id");
   if ($result) {
     echo json_encode(['success' => true]);
   } else {
