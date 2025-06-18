@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         header("Location: calendario_admin.php");
                     } elseif ($usuario['tipo'] == 'diretor') {
                         $_SESSION['id'] = $usuario['id'];
-                        header("Location: solicitacoes.php");
+                        header("Location: calendario_admin.php");
                     }
                     exit();
                 } else {
