@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Verifique se é diretor
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'diretor') {
     header("Location: login.html");
     exit();
@@ -8,6 +7,7 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'diretor') {
 $conn = new mysqli("localhost", "root", "", "tccteste");
 if ($conn->connect_error) die("Conexão falhou: " . $conn->connect_error);
 
+// Aprovar
 if (isset($_GET['aprovar'])) {
     $id = intval($_GET['aprovar']);
     $res = $conn->query("SELECT tipo, id_usuario FROM solicitacoes WHERE id=$id");
@@ -22,6 +22,8 @@ if (isset($_GET['aprovar'])) {
     header("Location: solicitacoes.php");
     exit();
 }
+
+// Negar
 if (isset($_GET['negar'])) {
     $id = intval($_GET['negar']);
     $res = $conn->query("SELECT tipo, id_usuario FROM solicitacoes WHERE id=$id");
@@ -37,7 +39,7 @@ if (isset($_GET['negar'])) {
     exit();
 }
 
-// Busca todas as aprovações pendentes com todos os dados do usuário
+// Buscar pendentes
 $res = $conn->query("
     SELECT a.id, a.tipo, a.id_usuario, a.status,
         p.Nome_Prof, p.NomeSocial_Prof, p.Cpf_Prof, p.Cel_Prof, p.Email_Prof,
@@ -51,14 +53,40 @@ $res = $conn->query("
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Aprovações pendentes</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Solicitações Pendentes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-    <h1>Aprovações pendentes</h1>
-    <table border="1">
-        <tr>
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg background_blue">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="calendario_admin.php">Oblivion</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link text-white" href="gerenciar_materias.php">Matérias</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="editar_perfil.php">Meu perfil</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="solicitacoes.php">Solicitações</a></li>
+        </ul>
+        <form class="d-flex" method="post" action="logout.php">
+          <button class="btn-logout" type="submit">Sair</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container bg-white shadow-lg rounded p-4 mb-5" style="margin-top: 80px;">
+    <h2 class="text-center titulo-azul mb-4">Solicitações Pendentes</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark text-center">
+          <tr>
             <th>Tipo</th>
             <th>Nome</th>
             <th>Nome Social</th>
@@ -66,31 +94,34 @@ $res = $conn->query("
             <th>Celular</th>
             <th>Email</th>
             <th>Ações</th>
-        </tr>
-        <?php while($row = $res->fetch_assoc()): ?>
-            <tr>
-                <td><?= htmlspecialchars($row['tipo']) ?></td>
-                <td>
-                    <?= $row['tipo']=='professor' ? htmlspecialchars($row['Nome_Prof']) : htmlspecialchars($row['Nome_Coord']) ?>
+          </tr>
+        </thead>
+        <tbody>
+        <?php if ($res->num_rows > 0): ?>
+            <?php while ($row = $res->fetch_assoc()): ?>
+              <tr>
+                <td class="text-center"><?= htmlspecialchars($row['tipo']) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Nome_Prof']) : htmlspecialchars($row['Nome_Coord']) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['NomeSocial_Prof']) : htmlspecialchars($row['NomeSocial_Coord']) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Cpf_Prof']) : htmlspecialchars($row['Cpf_Coord']) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Cel_Prof']) : htmlspecialchars($row['Cel_Coord']) ?></td>
+                <td><?= $row['tipo'] == 'professor' ? htmlspecialchars($row['Email_Prof']) : htmlspecialchars($row['Email_Coord']) ?></td>
+                <td class="text-center">
+                  <a href="?aprovar=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Aprovar</a>
+                  <a href="?negar=<?= $row['id'] ?>" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Negar</a>
                 </td>
-                <td>
-                    <?= $row['tipo']=='professor' ? htmlspecialchars($row['NomeSocial_Prof']) : htmlspecialchars($row['NomeSocial_Coord']) ?>
-                </td>
-                <td>
-                    <?= $row['tipo']=='professor' ? htmlspecialchars($row['Cpf_Prof']) : htmlspecialchars($row['Cpf_Coord']) ?>
-                </td>
-                <td>
-                    <?= $row['tipo']=='professor' ? htmlspecialchars($row['Cel_Prof']) : htmlspecialchars($row['Cel_Coord']) ?>
-                </td>
-                <td>
-                    <?= $row['tipo']=='professor' ? htmlspecialchars($row['Email_Prof']) : htmlspecialchars($row['Email_Coord']) ?>
-                </td>
-                <td>
-                    <a href="?aprovar=<?= $row['id'] ?>">Aprovar</a> | 
-                    <a href="?negar=<?= $row['id'] ?>">Negar</a>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    </table>
+              </tr>
+            <?php endwhile; ?>
+        <?php else: ?>
+          <tr>
+            <td colspan="7" class="text-center text-muted">Nenhuma solicitação pendente.</td>
+          </tr>
+        <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
